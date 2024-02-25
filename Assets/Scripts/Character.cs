@@ -113,6 +113,10 @@ public class Character : MonoBehaviour
         // Take damage if the player presses the "q" key
         if (Input.GetKeyDown(KeyCode.Q))
             ChangeHealth(-10);
+        
+        // Heal if the player presses the "e" key
+        if (Input.GetKeyDown(KeyCode.E))
+            ChangeHealth(10);
     }
 
     /// <summary>
@@ -148,13 +152,14 @@ public class Character : MonoBehaviour
         if (amt < 0)
         {
             // Start a coroutine to flash the character's sprite red
-            StartCoroutine(FlashRed());
+            StartCoroutine(FlashSpriteColor(Color.red));
         }
         
         // If the amount is positive, the character is healing
         else if (amt > 0)
         {
-
+            // Start a coroutine to flash the character's sprite red
+            StartCoroutine(FlashSpriteColor(Color.green));
         }
         
         // Update the character's health
@@ -164,17 +169,20 @@ public class Character : MonoBehaviour
         _currentHealth = Mathf.Clamp(_currentHealth, 0, _maxHealth);
     }
     
-    // Create a coroutine to flash the character's sprite red
-    private IEnumerator FlashRed()
+    /// <summary>
+    /// A coroutine to flash the character's sprite to a specific color.
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator FlashSpriteColor(Color flashColor)
     {
         float blinkTime = 0.2f;
-
         float totalFlashTime = 1f;
         
+        // Loop through the flash time to make the sprite blink
         for (float currentFlashTime = 0; currentFlashTime < totalFlashTime; currentFlashTime += blinkTime)
         {
-            // Set the sprite color to red
-            _spriteRenderer.color = Color.red;
+            // Set the sprite color to the flash color
+            _spriteRenderer.color = flashColor;
         
             // Wait for half of the blink time
             yield return new WaitForSeconds(blinkTime / 2);
