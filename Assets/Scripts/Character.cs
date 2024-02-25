@@ -31,6 +31,16 @@ public class Character : MonoBehaviour
     /// </summary>
     private bool _direction;
 
+    /// <summary>
+    /// The character's health
+    /// </summary>
+    [SerializeField] private int _currentHealth;
+
+    /// <summary>
+    /// The character's max health
+    /// </summary>
+    [SerializeField] private int _maxHealth;
+    
     #endregion
 
     #region Properties
@@ -39,8 +49,18 @@ public class Character : MonoBehaviour
     /// <summary>
     /// The character's speed
     /// </summary>
-    private float Speed => 5;
+    public float Speed => 5;
+    
+    /// <summary>
+    /// Test if the character is facing left
+    /// </summary>
+    public bool FacingLeft => _direction;
 
+    /// <summary>
+    /// // Test if the character is facing right
+    /// </summary>
+    public bool FacingRight => !_direction;
+    
     #endregion
 
     #region Unity Methods
@@ -53,6 +73,9 @@ public class Character : MonoBehaviour
         
         // Get the character's sprite renderer
         _spriteRenderer = GetComponent<SpriteRenderer>();
+        
+        // Set the character's health to the max health
+        _currentHealth = _maxHealth;
     }
 
     // Update is called once per frame
@@ -86,6 +109,10 @@ public class Character : MonoBehaviour
 
         // Normalize the vector to prevent faster diagonal movement
         _movementInput.Normalize();
+        
+        // Take damage if the player presses the "q" key
+        if (Input.GetKeyDown(KeyCode.Q))
+            ChangeHealth(-10);
     }
 
     /// <summary>
@@ -98,6 +125,9 @@ public class Character : MonoBehaviour
         _rb.velocity = _movementInput * Speed;
     }
 
+    /// <summary>
+    /// Determine the character's direction and flip the sprite based on the direction.
+    /// </summary>
     private void DetermineSpriteDirection()
     {
         // Determine the character's direction
@@ -112,5 +142,51 @@ public class Character : MonoBehaviour
         _spriteRenderer.flipX = _direction;
     }
 
+    public void ChangeHealth(int amt)
+    {
+        // If the amount is negative, the character is taking damage
+        if (amt < 0)
+        {
+            // Start a coroutine to flash the character's sprite red
+            StartCoroutine(FlashRed());
+        }
+        
+        // If the amount is positive, the character is healing
+        else if (amt > 0)
+        {
+
+        }
+        
+        // Update the character's health
+        _currentHealth += amt;
+        
+        // clamp the player's current Health to the range 0 to _maxHealth
+        _currentHealth = Mathf.Clamp(_currentHealth, 0, _maxHealth);
+    }
+    
+    // Create a coroutine to flash the character's sprite red
+    private IEnumerator FlashRed()
+    {
+        float blinkTime = 0.2f;
+
+        float totalFlashTime = 1f;
+        
+        for (float currentFlashTime = 0; currentFlashTime < totalFlashTime; currentFlashTime += blinkTime)
+        {
+            // Set the sprite color to red
+            _spriteRenderer.color = Color.red;
+        
+            // Wait for half of the blink time
+            yield return new WaitForSeconds(blinkTime / 2);
+        
+            // Set the sprite color back to white
+            _spriteRenderer.color = Color.white;
+            
+            // Wait for half of the blink time
+            yield return new WaitForSeconds(blinkTime / 2);
+        }
+
+    }
+    
     #endregion
 }
