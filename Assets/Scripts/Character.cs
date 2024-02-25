@@ -47,9 +47,38 @@ public class Character : MonoBehaviour
 
     // ! TODO: Change the property to use the CharacterClass enum for speed
     /// <summary>
-    /// The character's speed
+    /// The character's speed.
+    /// The speed is determined by the character's class.
     /// </summary>
-    public float Speed => 5;
+    public float Speed
+    {
+        get
+        {
+            // The speed of the character's class
+            float classSpeed = 0;
+
+            // The speed is determined by the character's class
+            switch (characterClass)
+            {
+                case CharacterClass.Balanced:
+                    classSpeed = 6;
+                    break;
+                
+                case CharacterClass.Melee:
+                    classSpeed = 8;
+                    break;
+                
+                case CharacterClass.Spread:
+                    classSpeed = 4;
+                    break;
+
+                default:
+                    break;
+            }
+            
+            return classSpeed;
+        }
+    }
     
     /// <summary>
     /// Test if the character is facing left
@@ -146,24 +175,28 @@ public class Character : MonoBehaviour
         _spriteRenderer.flipX = _direction;
     }
 
-    public void ChangeHealth(int amt)
+    /// <summary>
+    /// Change the character's health by a specific amount.
+    /// </summary>
+    /// <param name="changeAmount">The amount of health to change the character's health by</param>
+    public void ChangeHealth(int changeAmount)
     {
         // If the amount is negative, the character is taking damage
-        if (amt < 0)
+        if (changeAmount < 0)
         {
             // Start a coroutine to flash the character's sprite red
             StartCoroutine(FlashSpriteColor(Color.red));
         }
         
         // If the amount is positive, the character is healing
-        else if (amt > 0)
+        else if (changeAmount > 0)
         {
             // Start a coroutine to flash the character's sprite red
             StartCoroutine(FlashSpriteColor(Color.green));
         }
         
         // Update the character's health
-        _currentHealth += amt;
+        _currentHealth += changeAmount;
         
         // clamp the player's current Health to the range 0 to _maxHealth
         _currentHealth = Mathf.Clamp(_currentHealth, 0, _maxHealth);
