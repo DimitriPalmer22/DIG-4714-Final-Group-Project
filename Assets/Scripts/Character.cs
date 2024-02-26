@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Character : MonoBehaviour
 {
@@ -14,6 +15,11 @@ public class Character : MonoBehaviour
     /// The character's rigid body 
     /// </summary>
     private Rigidbody2D _rb;
+
+    /// <summary>
+    /// The animator for the player
+    /// </summary>
+    private Animator _animator;
 
     /// <summary>
     /// The character's sprite renderer
@@ -105,6 +111,9 @@ public class Character : MonoBehaviour
         
         // Set the character's health to the max health
         _currentHealth = _maxHealth;
+
+        // Get the character's animations
+        _animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -118,9 +127,8 @@ public class Character : MonoBehaviour
     {
         // Move the character based on the movement input vector
         MovePlayer();
-
-        // Determine the character's direction
         DetermineSpriteDirection();
+
     }
 
     #endregion
