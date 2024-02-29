@@ -7,3 +7,5 @@ S
 #Assets/Scripts/GameManagerScript.cs,9\f\9fdc04bb937ad8518c619732f03082491cd5b2e8
 G
 Assets/Scripts/Actor.cs,f\9\f9d006b0f3803849405b2d89277ce4990cb2188e
+R
+"Assets/Scripts/PlayerController.cs,4\4\44b5ee73c2a49f17e211a16dea550f3a1d42e622
