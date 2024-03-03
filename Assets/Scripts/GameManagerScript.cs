@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 /// <summary>
@@ -18,6 +20,9 @@ public class GameManagerScript : MonoBehaviour
 
     // The player object
     private GameObject _player;
+    
+    // The score text
+    private TMP_Text _scoreText;
     
     // A boolean to check if the game is paused
     private bool _isPaused;
@@ -45,8 +50,7 @@ public class GameManagerScript : MonoBehaviour
     
     #region Unity Methods
 
-    // Start is called before the first frame update
-    private void Start()
+    private void Awake()
     {
         // Prevent the game manager from being destroyed on load so we can access it from any scene
         DontDestroyOnLoad(gameObject);
@@ -54,6 +58,13 @@ public class GameManagerScript : MonoBehaviour
         // Set the instance of the game manager
         if (Instance == null)
             Instance = this;
+    }
+
+    // Start is called before the first frame update
+    private void Start()
+    {
+        // Set the score to 0
+        SetScore(0);
     }
 
     // Update is called once per frame
@@ -108,6 +119,42 @@ public class GameManagerScript : MonoBehaviour
         // TODO: Hide the pause menu
     }
 
+    private void SetScore(int newValue)
+    {
+        // Set the score to the amount
+        _score = newValue;
+        
+        // Update the score text
+        UpdateScoreText();
+    }
+
+    public void ChangeScore(int changeBy)
+    {
+        // Change the score by the amount
+        SetScore(_score + changeBy);
+    }
+    
+
+    private void UpdateScoreText()
+    {
+        Debug.Log($"Score text: {_scoreText}");
+        
+        // If the score text is null, return
+        if (_scoreText == null)
+            return;
+        
+        // Update the score text        
+        _scoreText.text = $"Score: {_score}";
+    }
+    
+    public void SetScoreText(TMP_Text scoreText)
+    {
+        // Set the score text
+        _scoreText = scoreText;
+        
+        UpdateScoreText();
+    } 
+    
     #endregion Methods
 
 }

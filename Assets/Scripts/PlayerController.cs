@@ -104,6 +104,14 @@ public class PlayerController : MonoBehaviour
         // Heal if the player presses the "e" key
         if (Input.GetKeyDown(KeyCode.E))
             _actorScript.ChangeHealth(1);
+        
+        // Change the score if the player presses the "r" or "t" key
+        if (Input.GetKeyDown(KeyCode.R))
+            GameManagerScript.Instance.ChangeScore(-5);
+        
+        if (Input.GetKeyDown(KeyCode.T))
+            GameManagerScript.Instance.ChangeScore(5);
+
     }
 
     /// <summary>
@@ -139,8 +147,6 @@ public class PlayerController : MonoBehaviour
 
         // Determine if the character is idle or moving
         _animator.SetFloat(SpeedForAnimation, _actorScript.MovementInput.magnitude);
-
-        Debug.Log($"CLIP NAME: {_animator.GetCurrentAnimatorClipInfo(0)[0].clip.name}");
     }
 
     private float SpeedAnimationHelper(float amt)
