@@ -6,6 +6,16 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
 
+    #region Static Fields
+
+    // These are used by the animator to determine the character's animation.
+    // These should only be used in the DetermineAnimation method.
+    private static readonly int XInput = Animator.StringToHash("XInput");
+    private static readonly int YInput = Animator.StringToHash("YInput");
+    private static readonly int SpeedForAnimation = Animator.StringToHash("Speed");
+
+    #endregion
+    
     #region Fields
 
     /// <summary>
@@ -18,31 +28,52 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private Actor _actorScript;
 
+    /// <summary>
+    /// The animator for the player
+    /// </summary>
+    /// <returns></returns>
+    private Animator _animator;
+
+    /// <summary>
+    /// The vector for the direction the character is facing
+    /// </summary>
+    private Vector2 _direction;
+
+
     #endregion Fields
     
     #region Unity Methods
     
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         // Get the character's rigid body
         _rb = GetComponent<Rigidbody2D>();
         
         // Get the character's actor script
         _actorScript = GetComponent<Actor>();
+        
+        // Get the character's animator
+        _animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         // Get the movement input from the player
         GetMovementInput();
     }
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         // Move the character based on the movement input vector
         MovePlayer();
+    }
+
+    private void LateUpdate()
+    {
+        // Determine the character's current animation 
+        DetermineAnimation();
     }
 
     #endregion Unity Methods
@@ -66,6 +97,8 @@ public class PlayerController : MonoBehaviour
         // Normalize the vector to prevent faster diagonal movement
         _actorScript.MovementInput.Normalize();
         
+        // TODO: Delete Later
+        
         // Take damage if the player presses the "q" key
         if (Input.GetKeyDown(KeyCode.Q))
             _actorScript.ChangeHealth(-10);
@@ -83,6 +116,21 @@ public class PlayerController : MonoBehaviour
     {
         // Apply the movement input to the character's rigid body
         _rb.velocity = _actorScript.MovementInput * _actorScript.Speed;
+        
+        // Change the direction the character is facing
+        if (_actorScript.MovementInput.magnitude >= 0.1f)
+            _direction = _actorScript.MovementInput.normalized;
+        
+    }
+
+    private void DetermineAnimation()
+    {
+        // Determine the direction the sprite is facing
+        _animator.SetFloat(XInput, _direction.x);
+        _animator.SetFloat(YInput, _direction.y);
+        
+        // Determine if the character is idle or moving
+        _animator.SetFloat(SpeedForAnimation,  _actorScript.MovementInput.magnitude);
     }
 
     #endregion Methods

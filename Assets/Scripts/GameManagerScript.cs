@@ -46,7 +46,7 @@ public class GameManagerScript : MonoBehaviour
     #region Unity Methods
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         // Prevent the game manager from being destroyed on load so we can access it from any scene
         DontDestroyOnLoad(gameObject);
@@ -57,7 +57,7 @@ public class GameManagerScript : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         // Receive input from the player
         UpdateInput();

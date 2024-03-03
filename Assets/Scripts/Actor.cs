@@ -72,22 +72,21 @@ public abstract class Actor : MonoBehaviour
     #region Unity Methods
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         // Set the character's health to the max health
         _currentHealth = _maxHealth;
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         
     }
 
-    void LateUpdate()
+    private void LateUpdate()
     {
-        // Determine the character's direction and flip the sprite based on the direction
-        DetermineSpriteDirection();
+        
     }
     
     #endregion

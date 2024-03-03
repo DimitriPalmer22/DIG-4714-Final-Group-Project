@@ -58,7 +58,7 @@ public class Character : Actor
     #region Unity Methods
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         // Get the character's sprite renderer
         _spriteRenderer = GetComponent<SpriteRenderer>();
@@ -68,7 +68,7 @@ public class Character : Actor
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
 
     }
