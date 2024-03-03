@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -86,7 +84,7 @@ public class PlayerController : MonoBehaviour
     private void GetMovementInput()
     {
         // If the game is paused, don't get any input
-        if (GameManagerScript.Instance.IsPaused)
+        if (GlobalLevelScript.Instance.IsPaused)
             return;
 
         // Create a vector2 of the horizontal and vertical input axes
@@ -107,10 +105,10 @@ public class PlayerController : MonoBehaviour
         
         // Change the score if the player presses the "r" or "t" key
         if (Input.GetKeyDown(KeyCode.R))
-            GameManagerScript.Instance.ChangeScore(-5);
+            GlobalLevelScript.Instance.ChangeScore(-5);
         
         if (Input.GetKeyDown(KeyCode.T))
-            GameManagerScript.Instance.ChangeScore(5);
+            GlobalLevelScript.Instance.ChangeScore(5);
 
     }
 

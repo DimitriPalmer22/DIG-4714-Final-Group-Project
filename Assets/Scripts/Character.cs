@@ -1,9 +1,5 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class Character : Actor
 {
@@ -18,11 +14,6 @@ public class Character : Actor
     /// A text object to display the character's health / lives
     /// </summary>
     [SerializeField] private TMP_Text _healthText;
-    
-    /// <summary>
-    /// A text object to display the player's score
-    /// </summary>
-    [SerializeField] private TMP_Text _scoreText;
     
     #endregion
 
@@ -79,9 +70,6 @@ public class Character : Actor
         
         // Set the character's health text
         UpdateHealthText();
-        
-        // Set the game manager's score text
-        GameManagerScript.Instance.SetScoreText(_scoreText);
     }
 
     // Update is called once per frame
