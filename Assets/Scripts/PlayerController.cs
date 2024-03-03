@@ -99,11 +99,11 @@ public class PlayerController : MonoBehaviour
 
         // Take damage if the player presses the "q" key
         if (Input.GetKeyDown(KeyCode.Q))
-            _actorScript.ChangeHealth(-10);
+            _actorScript.ChangeHealth(-1);
 
         // Heal if the player presses the "e" key
         if (Input.GetKeyDown(KeyCode.E))
-            _actorScript.ChangeHealth(10);
+            _actorScript.ChangeHealth(1);
     }
 
     /// <summary>

@@ -115,7 +115,7 @@ public abstract class Actor : MonoBehaviour
     /// Change the character's health by a specific amount.
     /// </summary>
     /// <param name="changeAmount">The amount of health to change the character's health by</param>
-    public void ChangeHealth(int changeAmount)
+    public virtual void ChangeHealth(int changeAmount)
     {
         // If the amount is negative, the character is taking damage
         if (changeAmount < 0)

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -13,6 +14,11 @@ public class Character : Actor
     /// </summary>
     [SerializeField] private CharacterClass characterClass;
 
+    /// <summary>
+    /// A text object to display the character's health / lives
+    /// </summary>
+    [SerializeField] private TMP_Text _healthText;
+    
     #endregion
 
     #region Properties
@@ -65,6 +71,9 @@ public class Character : Actor
         
         // Get the character's animations
         _animator = GetComponent<Animator>();
+        
+        // Set the character's health text
+        UpdateHealthText();
     }
 
     // Update is called once per frame
@@ -78,6 +87,17 @@ public class Character : Actor
 
     #region Methods
 
+    public override void ChangeHealth(int changeAmount)
+    {
+        base.ChangeHealth(changeAmount);
+        
+        UpdateHealthText();
+    }
+    
+    private void UpdateHealthText()
+    {
+        _healthText.text = $"x{_currentHealth}";
+    }
 
     #endregion
 }
