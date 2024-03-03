@@ -1,4 +1,0 @@
-
-Ycsharpsquid:S3903	"0Move 'GameManagerScript' into a named namespace.(›Âûµùÿÿÿÿ8¿ð¶²ß1
-¢csharpsquid:S1186/"yAdd a nested comment explaining why this method is empty, throw a 'NotSupportedException' or complete the implementation.(®±®“üÿÿÿÿ8ÐÍ¸²ß1
-Vcsharpsquid:S3459"3Remove unassigned field '_score', or set its value.(ÿ™‚8Ç½¿²ß1
