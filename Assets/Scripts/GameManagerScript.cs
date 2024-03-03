@@ -8,6 +8,9 @@ using UnityEngine;
 /// </summary>
 public class GameManagerScript : MonoBehaviour
 {
+
+    private const KeyCode PauseKey = KeyCode.Escape;
+    
     #region Fields
 
     // The player's score
@@ -15,6 +18,9 @@ public class GameManagerScript : MonoBehaviour
 
     // The player object
     private GameObject _player;
+    
+    // A boolean to check if the game is paused
+    private bool _isPaused;
     
     #endregion
 
@@ -29,8 +35,15 @@ public class GameManagerScript : MonoBehaviour
     /// The player's score
     /// </summary>
     public int Score => _score;
+    
+    /// <summary>
+    /// A boolean to check if the game is paused
+    /// </summary>
+    public bool IsPaused => _isPaused;
 
     #endregion
+    
+    #region Unity Methods
 
     // Start is called before the first frame update
     void Start()
@@ -46,6 +59,55 @@ public class GameManagerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Receive input from the player
+        UpdateInput();
     }
     
+    #endregion Unity Methods
+    
+    #region Methods
+
+    private void UpdateInput()
+    {
+        // If the player presses the pause key
+        if (Input.GetKeyDown(PauseKey))
+        {
+            // If the game is pause, unpause the game
+            if (_isPaused)
+                UnpauseGame();
+
+            // If the game is not paused, pause the game
+            else
+                PauseGame();
+        }
+    }
+
+    private void PauseGame()
+    {
+        Debug.Log("Pausing the game!");
+        
+        // Pause the game
+        Time.timeScale = 0;
+        
+        // Set the paused boolean to true
+        _isPaused = true;
+        
+        // TODO: Show the pause menu
+    }
+
+    private void UnpauseGame()
+    {
+        Debug.Log("Unpausing the game!");
+        
+        // Unpause the game
+        Time.timeScale = 1;
+        
+        // Set the paused boolean to false
+        _isPaused = false;
+        
+        // TODO: Hide the pause menu
+    }
+
+    #endregion Methods
+
 }

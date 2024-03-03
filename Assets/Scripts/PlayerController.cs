@@ -56,6 +56,10 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private void GetMovementInput()
     {
+        // If the game is paused, don't get any input
+        if (GameManagerScript.Instance.IsPaused)
+            return;
+        
         // Create a vector2 of the horizontal and vertical input axes
         _actorScript.MovementInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
 
