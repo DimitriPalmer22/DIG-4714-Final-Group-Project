@@ -5,10 +5,6 @@ public class Character : Actor
 {
     #region Fields
 
-    /// <summary>
-    /// Enum for character class 
-    /// </summary>
-    [SerializeField] private CharacterClass characterClass;
 
     /// <summary>
     /// A text object to display the character's health / lives
@@ -19,7 +15,8 @@ public class Character : Actor
 
     #region Properties
 
-    // ! TODO: Change the property to use the CharacterClass enum for speed
+    private CharacterClass CharacterClass => GameManagerScript.Instance.CharacterClass;
+    
     /// <summary>
     /// The character's speed.
     /// The speed is determined by the character's class.
@@ -32,7 +29,7 @@ public class Character : Actor
             float classSpeed = 0;
 
             // The speed is determined by the character's class
-            switch (characterClass)
+            switch (CharacterClass)
             {
                 case CharacterClass.Balanced:
                     classSpeed = 6;
@@ -54,7 +51,6 @@ public class Character : Actor
         }
     }
     
-
     #endregion
 
     #region Unity Methods

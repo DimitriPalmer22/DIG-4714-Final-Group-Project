@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 /// <summary>
 /// The game manager script will ONLY be assigned to the Global Game Object.
@@ -9,7 +10,11 @@ public class GameManagerScript : MonoBehaviour
 
     #region Fields
 
-
+    /// <summary>
+    /// Used to create a player with a specific class.
+    /// TODO: Unserialize this field and use it to create the player.
+    /// </summary>
+    [SerializeField] private CharacterClass _characterClass;
     
     #endregion
 
@@ -19,7 +24,8 @@ public class GameManagerScript : MonoBehaviour
     /// The instance allows us to access the game manager from any script.
     /// </summary>
     public static GameManagerScript Instance { get; private set; }
-
+    
+    public CharacterClass CharacterClass => _characterClass;
 
     #endregion
     
@@ -38,15 +44,27 @@ public class GameManagerScript : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
+        // Load the level
+        LoadLevel();
 
+        // Create the character
+        CreateCharacter();
     }
-
-
+    
     #endregion Unity Methods
     
     #region Methods
 
- 
+    private void LoadLevel()
+    {
+        // TODO: Implement a level library and load the appropriate level
+        // TODO: Load the level
+    }
+
+    private void CreateCharacter()
+    {
+        Debug.Log($"The character is a {_characterClass} class!");
+    }
     
     #endregion Methods
 
