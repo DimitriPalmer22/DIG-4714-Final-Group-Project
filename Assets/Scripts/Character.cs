@@ -82,7 +82,7 @@ public class Character : Actor
     public override void ChangeHealth(int changeAmount)
     {
         base.ChangeHealth(changeAmount);
-        
+        Debug.Log("Hit");
         UpdateHealthText();
     }
     
