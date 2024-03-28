@@ -7,6 +7,10 @@ public class BasicEnemyScript : MonoBehaviour
     [SerializeField] private GameObject player;
     [SerializeField] private float chaseSpeed;
 
+    private void OnEnable()
+    {
+        player = FindObjectOfType<PlayerController>().gameObject;
+    }
     // Update is called once per frame
     void Update()
     {
