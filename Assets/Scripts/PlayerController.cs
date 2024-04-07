@@ -109,6 +109,9 @@ public class PlayerController : MonoBehaviour
         
         if (Input.GetKeyDown(KeyCode.T))
             GlobalLevelScript.Instance.ChangeScore(5);
+        
+        if (Input.GetKeyDown(KeyCode.L))
+            GameManagerScript.Instance.SaveGame();
 
     }
 

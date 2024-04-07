@@ -1,10 +1,11 @@
+using System;
 using TMPro;
 using UnityEngine;
 
+[Serializable]
 public class Character : Actor
 {
     #region Fields
-
 
     /// <summary>
     /// A text object to display the character's health / lives
@@ -67,13 +68,6 @@ public class Character : Actor
         // Set the character's health text
         UpdateHealthText();
     }
-
-    // Update is called once per frame
-    private void Update()
-    {
-
-    }
-
 
     #endregion
 

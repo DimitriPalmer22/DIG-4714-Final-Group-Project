@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -7,7 +9,6 @@ using UnityEngine.Serialization;
 /// </summary>
 public class GameManagerScript : MonoBehaviour
 {
-
     #region Fields
 
     /// <summary>
@@ -15,7 +16,7 @@ public class GameManagerScript : MonoBehaviour
     /// TODO: Unserialize this field and use it to create the player.
     /// </summary>
     [SerializeField] private CharacterClass _characterClass;
-    
+
     #endregion
 
     #region Properties
@@ -24,11 +25,11 @@ public class GameManagerScript : MonoBehaviour
     /// The instance allows us to access the game manager from any script.
     /// </summary>
     public static GameManagerScript Instance { get; private set; }
-    
+
     public CharacterClass CharacterClass => _characterClass;
 
     #endregion
-    
+
     #region Unity Methods
 
     private void Awake()
@@ -50,9 +51,9 @@ public class GameManagerScript : MonoBehaviour
         // Create the character
         CreateCharacter();
     }
-    
+
     #endregion Unity Methods
-    
+
     #region Methods
 
     private void LoadLevel()
@@ -65,7 +66,32 @@ public class GameManagerScript : MonoBehaviour
     {
         Debug.Log($"The character is a {_characterClass} class!");
     }
-    
-    #endregion Methods
 
+    public void SaveGame()
+    {
+        Debug.Log("Saving game...");
+        
+        Dictionary<IFileSaver, string> savers = new Dictionary<IFileSaver, string>
+        {
+            {new JsonFileSaver(), "Player Data.json"},
+            {new XmlFileSaver(), "Player Data.xml"},
+            {new TxtFileSaver(), "Player Data.txt"}
+        };
+        
+        // Save to each type of file saver
+        foreach (var saver in savers)
+        {
+            var fileSaver = saver.Key;
+            string savePath = $"{Application.persistentDataPath}/{saver.Value}";
+            
+            Debug.Log($"Saving to {savePath}");
+            
+            using (fileSaver.OpenFileStream(savePath))
+            {
+                fileSaver.WriteText(TestSaveInfo.Instance);
+            }
+        }
+    }
+
+    #endregion Methods
 }
