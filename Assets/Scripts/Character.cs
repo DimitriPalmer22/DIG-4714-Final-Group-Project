@@ -43,9 +43,6 @@ public class Character : Actor
                 case CharacterClass.Spread:
                     classSpeed = 4;
                     break;
-
-                default:
-                    break;
             }
             
             return classSpeed;
@@ -67,6 +64,8 @@ public class Character : Actor
         
         // Set the character's health text
         UpdateHealthText();
+        
+        OnDeath += LogDeath;
     }
 
     #endregion
@@ -83,6 +82,12 @@ public class Character : Actor
     private void UpdateHealthText()
     {
         _healthText.text = $"x{_currentHealth}";
+    }
+
+    private void LogDeath()
+    {
+        // Log the character's death
+        Debug.Log("The character has died!");
     }
 
     #endregion

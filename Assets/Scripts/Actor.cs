@@ -3,6 +3,7 @@ using UnityEngine;
 
 public abstract class Actor : MonoBehaviour
 {
+    public delegate void DeathEventHandler();
 
     #region Fields
     
@@ -37,6 +38,8 @@ public abstract class Actor : MonoBehaviour
     /// </summary>
     [SerializeField] protected int _maxHealth;
 
+    public event DeathEventHandler OnDeath;
+    
     #endregion 
     
     #region Properties
@@ -135,6 +138,10 @@ public abstract class Actor : MonoBehaviour
         
         // clamp the player's current Health to the range 0 to _maxHealth
         _currentHealth = Mathf.Clamp(_currentHealth, 0, _maxHealth);
+        
+        // Invoke the OnDeath event if the character's health is 0
+        if (_currentHealth == 0)
+            OnDeath?.Invoke();
     }
     
     /// <summary>

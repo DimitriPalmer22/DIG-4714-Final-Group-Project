@@ -1,9 +1,12 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class BasicEnemyScript : MonoBehaviour
 {
+    private const float StopWalkingDistance = 2f;
+    
     [SerializeField] private GameObject player;
     [SerializeField] private float chaseSpeed;
 
@@ -21,10 +24,17 @@ public class BasicEnemyScript : MonoBehaviour
         direction.Normalize();
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 
-        transform.position = Vector2.MoveTowards(this.transform.position, player.transform.position, 
-            chaseSpeed * Time.deltaTime);
+        // Get the distance between the player and the enemy
+        var distance = Vector2.Distance(transform.position, player.transform.position);
 
-        transform.rotation = Quaternion.Euler(Vector3.forward * angle);
+        if (distance > 1)
+        {
+            transform.position = Vector2.MoveTowards(transform.position, player.transform.position, 
+                chaseSpeed * Time.deltaTime);
+        }
+        
+        
+        // transform.rotation = Quaternion.Euler(Vector3.forward * angle);
 
     }
 
@@ -35,5 +45,11 @@ public class BasicEnemyScript : MonoBehaviour
             other.GetComponent<Character>().ChangeHealth(-1);
         }
   
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, StopWalkingDistance);
     }
 }

@@ -38,7 +38,7 @@ public class RangedEnemy : MonoBehaviour
             Shoot();
         }
 
-        transform.rotation = Quaternion.Euler(Vector3.forward * angle);
+        // transform.rotation = Quaternion.Euler(Vector3.forward * angle);
         shootingPoint.rotation = Quaternion.Euler(0f, 0f, angle);
 
     }

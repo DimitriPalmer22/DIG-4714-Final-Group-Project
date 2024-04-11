@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
@@ -71,13 +72,22 @@ public class GameManagerScript : MonoBehaviour
     {
         Debug.Log("Saving game...");
         
-        Dictionary<IFileSaver, string> savers = new Dictionary<IFileSaver, string>
-        {
-            {new JsonFileSaver(), "Player Data.json"},
-            {new XmlFileSaver(), "Player Data.xml"},
-            {new TxtFileSaver(), "Player Data.txt"}
-        };
+
+        Dictionary<IFileSaver, string> savers = new();
         
+        // Try to create the file savers
+        try 
+        {
+            savers.Add(new JsonFileSaver(), "Player Data.json");
+            savers.Add(new XmlFileSaver(), "Player Data.xml");
+            savers.Add(new TxtFileSaver(), "Player Data.txt");
+        }
+        catch (Exception e)
+        {
+            Debug.LogError(e);
+            throw;
+        }
+
         // Save to each type of file saver
         foreach (var saver in savers)
         {
@@ -88,7 +98,16 @@ public class GameManagerScript : MonoBehaviour
             
             using (fileSaver.OpenFileStream(savePath))
             {
-                fileSaver.WriteText(TestSaveInfo.Instance);
+                // Try to save
+                try
+                {
+                    fileSaver.WriteText(TestSaveInfo.Instance);
+                }
+                catch (Exception e)
+                {
+                    Debug.LogError(e);
+                    throw;
+                }
             }
         }
     }
