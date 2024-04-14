@@ -11,6 +11,8 @@ public class Character : Actor
     /// A text object to display the character's health / lives
     /// </summary>
     [SerializeField] private TMP_Text _healthText;
+
+    private Rigidbody2D _rb;
     
     #endregion
 
@@ -54,8 +56,13 @@ public class Character : Actor
     #region Unity Methods
 
     // Start is called before the first frame update
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
+        
+        // Get the character's rigid body
+        _rb = GetComponent<Rigidbody2D>();
+        
         // Get the character's sprite renderer
         _spriteRenderer = GetComponent<SpriteRenderer>();
         
@@ -66,6 +73,9 @@ public class Character : Actor
         UpdateHealthText();
         
         OnDeath += LogDeath;
+        OnDeath += FlashBlackOnDeath;
+        OnDeath += FreezeRigidBodyOnDeath;
+        OnDeath += GlobalLevelScript.Instance.OnPlayerDeath;
     }
 
     #endregion
@@ -88,6 +98,17 @@ public class Character : Actor
     {
         // Log the character's death
         Debug.Log("The character has died!");
+    }
+    
+    
+    private void FlashBlackOnDeath()
+    {
+        Flash(Color.black, 30, .5f);
+    }
+    
+    private void FreezeRigidBodyOnDeath()
+    {
+        _rb.constraints = RigidbodyConstraints2D.FreezeAll;
     }
 
     #endregion

@@ -7,19 +7,16 @@ public class GlobalLevelScript : MonoBehaviour
 
     #region Fields
 
-    // The player's score
-    private int _score;
-
     // The player object
     private GameObject _player;
+
+    [Header("UI")]
     
-    /// <summary>
-    /// A text object to display the player's score
-    /// </summary>
     [SerializeField] private TMP_Text _scoreText;
-    
-    // A boolean to check if the game is paused
-    private bool _isPaused;
+
+    [SerializeField] private GameObject _pausedMenuParent;
+
+    [SerializeField] private GameObject _gameOverMenuParent;
 
     #endregion
 
@@ -33,12 +30,15 @@ public class GlobalLevelScript : MonoBehaviour
     /// <summary>
     /// The player's score
     /// </summary>
-    public int Score => _score;
-    
+    public int Score { get; private set; }
+
     /// <summary>
     /// A boolean to check if the game is paused
     /// </summary>
-    public bool IsPaused => _isPaused;
+    public bool IsPaused { get; private set; }
+
+    // A boolean to check if the player is dead
+    public bool IsPlayerDead { get; private set; }
 
     #endregion
 
@@ -49,6 +49,12 @@ public class GlobalLevelScript : MonoBehaviour
         // Set the instance of the level script
         if (Instance == null)
             Instance = this;
+
+        // hide the paused menu
+        _pausedMenuParent.SetActive(false);
+
+        // hide the game over menu
+        _gameOverMenuParent.SetActive(false);
     }
 
     private void Start()
@@ -56,14 +62,13 @@ public class GlobalLevelScript : MonoBehaviour
         // Set the score to 0
         SetScore(0);
     }
-    
+
     // Update is called once per frame
     private void Update()
     {
         // Receive input from the player
         UpdateInput();
     }
-
 
     #endregion
 
@@ -75,7 +80,7 @@ public class GlobalLevelScript : MonoBehaviour
         if (Input.GetKeyDown(PauseKey))
         {
             // If the game is pause, unpause the game
-            if (_isPaused)
+            if (IsPaused)
                 UnpauseGame();
 
             // If the game is not paused, pause the game
@@ -86,35 +91,39 @@ public class GlobalLevelScript : MonoBehaviour
 
     private void PauseGame()
     {
-        Debug.Log("Pausing the game!");
-        
+        if (IsPaused)
+            return;
+
         // Pause the game
         Time.timeScale = 0;
-        
+
         // Set the paused boolean to true
-        _isPaused = true;
-        
-        // TODO: Show the pause menu
+        IsPaused = true;
+
+        // Show the pause menu
+        _pausedMenuParent.SetActive(true);
     }
 
     private void UnpauseGame()
     {
-        Debug.Log("Unpausing the game!");
-        
+        if (!IsPaused)
+            return;
+
         // Unpause the game
         Time.timeScale = 1;
-        
+
         // Set the paused boolean to false
-        _isPaused = false;
-        
-        // TODO: Hide the pause menu
+        IsPaused = false;
+
+        // Hide the pause menu
+        _pausedMenuParent.SetActive(false);
     }
 
     private void SetScore(int newValue)
     {
         // Set the score to the amount
-        _score = newValue;
-        
+        Score = newValue;
+
         // Update the score text
         UpdateScoreText();
     }
@@ -122,22 +131,28 @@ public class GlobalLevelScript : MonoBehaviour
     public void ChangeScore(int changeBy)
     {
         // Change the score by the amount
-        SetScore(_score + changeBy);
+        SetScore(Score + changeBy);
     }
-    
+
 
     private void UpdateScoreText()
     {
-        Debug.Log($"Score text: {_scoreText}");
-        
         // If the score text is null, return
         if (_scoreText == null)
             return;
-        
+
         // Update the score text        
-        _scoreText.text = $"Score: {_score}";
+        _scoreText.text = $"Score: {Score}";
     }
-    
+
+    public void OnPlayerDeath()
+    {
+        // Set the player dead boolean to true
+        IsPlayerDead = true;
+
+        // Show the game over menu
+        _gameOverMenuParent.SetActive(true);
+    }
+
     #endregion
-    
 }

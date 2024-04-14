@@ -83,8 +83,13 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private void GetMovementInput()
     {
+        // Set the movement input to zero
+        _actorScript.MovementInput = Vector2.zero;
+
         // If the game is paused, don't get any input
-        if (GlobalLevelScript.Instance.IsPaused)
+        // If the player is dead, don't get any input
+        if (GlobalLevelScript.Instance.IsPaused ||
+            GlobalLevelScript.Instance.IsPlayerDead)
             return;
 
         // Create a vector2 of the horizontal and vertical input axes
@@ -102,17 +107,16 @@ public class PlayerController : MonoBehaviour
         // Heal if the player presses the "e" key
         if (Input.GetKeyDown(KeyCode.E))
             _actorScript.ChangeHealth(1);
-        
+
         // Change the score if the player presses the "r" or "t" key
         if (Input.GetKeyDown(KeyCode.R))
             GlobalLevelScript.Instance.ChangeScore(-5);
-        
+
         if (Input.GetKeyDown(KeyCode.T))
             GlobalLevelScript.Instance.ChangeScore(5);
-        
+
         if (Input.GetKeyDown(KeyCode.L))
             GameManagerScript.Instance.SaveGame();
-
     }
 
     /// <summary>
@@ -131,8 +135,10 @@ public class PlayerController : MonoBehaviour
 
         // Change the character's animation if the direction or speed has changed
         if (prevDirection != _direction.normalized ||
-            Math.Abs(SpeedAnimationHelper(prevSpeed.magnitude) - SpeedAnimationHelper(_rb.velocity.normalized.magnitude)) > 0.01f
-        )
+            Math.Abs(
+                SpeedAnimationHelper(prevSpeed.magnitude) - SpeedAnimationHelper(_rb.velocity.normalized.magnitude)) >
+            0.01f
+           )
             _animator.SetTrigger(ChangeAnimation);
 
         // Change the direction the character is facing
