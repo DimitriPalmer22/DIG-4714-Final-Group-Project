@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -37,6 +38,8 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private Vector2 _direction;
 
+    [SerializeField] private XP_Bar xpBar;
+
     #endregion Fields
 
     #region Unity Methods
@@ -56,9 +59,15 @@ public class PlayerController : MonoBehaviour
 
     // Update is called once per frame
     private void Update()
-    {
+    {      
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            xpBar.addXP(15);
+        }
         // Get the movement input from the player
         GetMovementInput();
+
+ 
     }
 
     private void FixedUpdate()
