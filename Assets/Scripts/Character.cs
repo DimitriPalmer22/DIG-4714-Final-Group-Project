@@ -84,8 +84,12 @@ public class Character : Actor
 
     public override void ChangeHealth(int changeAmount)
     {
+        // If the character is dead, return
+        if (_currentHealth <= 0)
+            return;
+        
         base.ChangeHealth(changeAmount);
-        Debug.Log("Hit");
+        
         UpdateHealthText();
     }
     

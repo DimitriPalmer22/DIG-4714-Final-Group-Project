@@ -39,6 +39,11 @@ public class PlayerController : MonoBehaviour
     private Vector2 _direction;
 
     [SerializeField] private XP_Bar xpBar;
+    
+    /// <summary>
+    /// A reference to the character's weapon
+    /// </summary>
+    private CharacterWeapon _characterWeapon;
 
     #endregion Fields
 
@@ -55,6 +60,9 @@ public class PlayerController : MonoBehaviour
 
         // Get the character's animator
         _animator = GetComponent<Animator>();
+        
+        // Get the character's weapon
+        _characterWeapon = GetComponent<CharacterWeapon>();
     }
 
     // Update is called once per frame
@@ -107,6 +115,10 @@ public class PlayerController : MonoBehaviour
         // Normalize the vector to prevent faster diagonal movement
         _actorScript.MovementInput.Normalize();
 
+        // Shoot if the player presses space
+        if (Input.GetKey(KeyCode.Space))
+            _characterWeapon.Fire();
+        
         // TODO: Delete Later
 
         // Take damage if the player presses the "q" key

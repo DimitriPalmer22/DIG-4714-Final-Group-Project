@@ -66,5 +66,8 @@ public class EnemySpawner : MonoBehaviour
         spawnPos = new Vector3(spawnX, spawnY, 0);
 
         spawnPos = Camera.main.ViewportToWorldPoint(spawnPos);
+
+        // Make sure that enemies are spawned at the same z position as the player
+        spawnPos = new Vector3(spawnPos.x, spawnPos.y, 0);
     }
 }

@@ -81,17 +81,6 @@ public abstract class Actor : MonoBehaviour
         // Set the character's health to the max health
         _currentHealth = _maxHealth;
     }
-
-    // Update is called once per frame
-    private void Update()
-    {
-        
-    }
-
-    private void LateUpdate()
-    {
-        
-    }
     
     #endregion
     
@@ -121,6 +110,10 @@ public abstract class Actor : MonoBehaviour
     /// <param name="changeAmount">The amount of health to change the character's health by</param>
     public virtual void ChangeHealth(int changeAmount)
     {
+        // Do not change the character's health if the character is already dead
+        if (_currentHealth <= 0)
+            return;
+        
         // Update the character's health
         _currentHealth += changeAmount;
         
