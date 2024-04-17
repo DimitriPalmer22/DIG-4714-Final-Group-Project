@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 7227955559923751768}
   - component: {fileID: 7419705942726810847}
   - component: {fileID: 2320672240232539301}
-  - component: {fileID: 4708597460664878936}
+  - component: {fileID: -8125332156569696687}
   m_Layer: 0
-  m_Name: Spread Weapon Pickup
+  m_Name: Burst Weapon Pickup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -125,7 +125,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8560891dfec0415f9e4032ca1f4407da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &4708597460664878936
+--- !u!114 &-8125332156569696687
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -134,12 +134,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 5403259818439053640}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fa93c62268524d92a8fe55bff403b7b3, type: 3}
+  m_Script: {fileID: 11500000, guid: a93c56b3fc63423a8b81998ab2c83ab3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   weapon: {fileID: 0}
   projectilePrefab: {fileID: 7994584620495132708, guid: f8bd5bf14e941c44ca670c3a27af951d, type: 3}
   fireCooldown: 1
-  projectileVelocity: 4
-  projectileCount: 4
-  spreadAngle: 45
+  projectileVelocity: 5
+  projectileCount: 3
+  burstDuration: 0.25
