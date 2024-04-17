@@ -14,7 +14,8 @@ GameObject:
   - component: {fileID: 4732601643472182426}
   - component: {fileID: 3514001315218393691}
   - component: {fileID: 8687759380488458876}
-  - component: {fileID: 6536838884462571452}
+  - component: {fileID: 4171312826083138871}
+  - component: {fileID: 5346005118237722439}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -159,7 +160,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &6536838884462571452
+--- !u!114 &4171312826083138871
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4232035106369402750}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc0c71ac11114676843da4d94a59b19a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5346005118237722439
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -171,6 +184,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf1db3cecb0e4c44aa45fd75cbe3f66d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weapon: {fileID: 0}
   projectilePrefab: {fileID: 7994584620495132708, guid: f8bd5bf14e941c44ca670c3a27af951d, type: 3}
   fireCooldown: 0.5
   projectileVelocity: 3

@@ -1,8 +1,6 @@
-using System;
-using System.Collections;
 using UnityEngine;
 
-public abstract class CharacterWeapon : MonoBehaviour
+public class CharacterWeapon : MonoBehaviour
 {
     #region Fields
 
@@ -10,18 +8,26 @@ public abstract class CharacterWeapon : MonoBehaviour
     /// A reference to the character script
     /// </summary>
     protected Character character;
-    
-    [SerializeField] protected GameObject projectilePrefab;
-    [SerializeField] private float fireCooldown;
-    [SerializeField] protected float projectileVelocity;
-    
+
+    /// <summary>
+    /// The direction the bullet will travel in when fired
+    /// </summary>
     protected Vector2 fireDirection;
-    
+
+    /// <summary>
+    /// A flag to determine if the weapon can shoot
+    /// </summary>
     private bool _canShoot = true;
-    
+
+    private CharacterWeaponInfo weaponInfo;
+
     #endregion Fields
 
     #region Properties
+
+    public Vector2 FireDirection => fireDirection;
+
+    public Character Character => character;
 
     #endregion Properties
 
@@ -32,14 +38,16 @@ public abstract class CharacterWeapon : MonoBehaviour
     {
         // Get the character script
         character = GetComponent<Character>();
-        
+
         // Initialize the fire direction to down
         fireDirection = Vector2.right;
+
+        // Get the weapon info
+        weaponInfo = GetComponent<CharacterWeaponInfo>();
+
+        // Set the weapon info's weapon to this weapon
+        weaponInfo.weapon = this;
     }
-
-    #endregion
-
-    #region Methods
 
     protected virtual void Update()
     {
@@ -47,24 +55,40 @@ public abstract class CharacterWeapon : MonoBehaviour
             fireDirection = character.MovementInput.normalized;
     }
 
+    #endregion
+
+    #region Methods
+
     public void Fire()
     {
         // If the weapon can't shoot, return
         if (!_canShoot)
             return;
-        
+
         // Run the custom fire method
-        CustomFire();
+        weaponInfo.CustomFire();
 
         // Set the can shoot variable to false
         _canShoot = false;
-        
+
         // Reset the can shoot variable
-        Invoke(nameof(ResetCanShoot), fireCooldown);
+        Invoke(nameof(ResetCanShoot), weaponInfo.fireCooldown);
     }
 
-    protected abstract void CustomFire();
-    
+    public void ChangeWeaponInfo(CharacterWeaponInfo weaponInfo)
+    {
+        // Remove the current weapon info
+        Destroy(this.weaponInfo);
+        this.weaponInfo = null;
+
+        // Add a new weapon info
+        this.weaponInfo = (CharacterWeaponInfo)gameObject.AddComponent(weaponInfo.GetType());
+        this.weaponInfo.weapon = this;
+        
+        // Copy the information from the new weapon info to the weapon info
+        weaponInfo.CopyInformationTo(this.weaponInfo);
+    }
+
     private void ResetCanShoot()
     {
         _canShoot = true;
