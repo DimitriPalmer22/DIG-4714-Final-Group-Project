@@ -5,12 +5,7 @@ using UnityEngine;
 
 public class BasicEnemyScript : EnemyScript
 {
-    private const float StopWalkingDistance = 2f;
-
-    // Update is called once per frame
-    private void Update()
-    {
-    }
+    private const float StopWalkingDistance = .5f;
 
     protected override void FixedUpdate()
     {
@@ -22,15 +17,18 @@ public class BasicEnemyScript : EnemyScript
 
     protected override void MoveTowardPlayer()
     {
+        // Get the direction to the player
         Vector2 direction = Player.transform.position - transform.position;
-
         direction.Normalize();
         
         // Get the distance between the player and the enemy
         var distance = Vector2.Distance(transform.position, Player.transform.position);
 
+        if (distance <= StopWalkingDistance)
+            return;
+
+        // Move towards the player
         var newPosition = Vector2.MoveTowards(transform.position, Player.transform.position, Speed * Time.deltaTime);
-        
         rb.MovePosition(newPosition);
     }
 

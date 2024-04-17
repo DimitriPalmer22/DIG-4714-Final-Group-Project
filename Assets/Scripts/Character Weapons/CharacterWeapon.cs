@@ -11,9 +11,12 @@ public abstract class CharacterWeapon : MonoBehaviour
     /// </summary>
     protected Character character;
     
-    [SerializeField] private GameObject projectilePrefab;
+    [SerializeField] protected GameObject projectilePrefab;
     [SerializeField] private float fireCooldown;
-
+    [SerializeField] protected float projectileVelocity;
+    
+    protected Vector2 fireDirection;
+    
     private bool _canShoot = true;
     
     #endregion Fields
@@ -29,11 +32,20 @@ public abstract class CharacterWeapon : MonoBehaviour
     {
         // Get the character script
         character = GetComponent<Character>();
+        
+        // Initialize the fire direction to down
+        fireDirection = Vector2.right;
     }
 
     #endregion
 
     #region Methods
+
+    protected virtual void Update()
+    {
+        if (character.MovementInput != Vector2.zero)
+            fireDirection = character.MovementInput.normalized;
+    }
 
     public void Fire()
     {

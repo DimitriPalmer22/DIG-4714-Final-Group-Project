@@ -8,6 +8,8 @@ public abstract class EnemyScript : Actor
     
     [SerializeField] protected float chaseSpeed;
 
+    [SerializeField] protected int scoreValue;
+
     protected Rigidbody2D rb;
 
     #endregion Fields
@@ -27,12 +29,16 @@ public abstract class EnemyScript : Actor
         Player = FindObjectOfType<PlayerController>().gameObject;
     }
 
-    protected virtual void Start()
+    protected override void Start()
     {
         base.Start();
         
         // Get the rigid body component
         rb = GetComponent<Rigidbody2D>();
+        
+        // Subscribe to the OnDeath event
+        OnDeath += DestroyOnDeath;
+        OnDeath += AddToScoreOnDeath;
     }
     
     protected virtual void Update()
@@ -55,6 +61,16 @@ public abstract class EnemyScript : Actor
     #region Methods
 
     protected abstract void MoveTowardPlayer();
+
+    private void DestroyOnDeath()
+    {
+        Destroy(gameObject);
+    }
+
+    private void AddToScoreOnDeath()
+    {
+        GlobalLevelScript.Instance.ChangeScore(scoreValue);
+    }
 
     #endregion Methods
 

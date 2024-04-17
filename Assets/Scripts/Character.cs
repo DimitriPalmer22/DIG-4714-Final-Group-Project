@@ -63,9 +63,6 @@ public class Character : Actor
         // Get the character's rigid body
         _rb = GetComponent<Rigidbody2D>();
         
-        // Get the character's sprite renderer
-        _spriteRenderer = GetComponent<SpriteRenderer>();
-        
         // Get the character's animations
         _animator = GetComponent<Animator>();
         

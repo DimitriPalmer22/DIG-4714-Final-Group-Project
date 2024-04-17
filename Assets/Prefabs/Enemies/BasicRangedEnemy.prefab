@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 6663147033284625278}
   m_Layer: 0
   m_Name: BasicRangedEnemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -132,7 +132,7 @@ MonoBehaviour:
   _currentHealth: 3
   _maxHealth: 3
   chaseSpeed: 2
-  player: {fileID: 4232035106369402750, guid: 57c8541dc24e5ea4baac3e51057dcaab, type: 3}
+  scoreValue: 20
   fireRate: 2
   distanceToShoot: 8
   distanceToStop: 5

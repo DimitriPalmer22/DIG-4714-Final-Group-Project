@@ -80,6 +80,9 @@ public abstract class Actor : MonoBehaviour
     {
         // Set the character's health to the max health
         _currentHealth = _maxHealth;
+        
+        // Get the actor's sprite renderer
+        _spriteRenderer = GetComponent<SpriteRenderer>();
     }
     
     #endregion
