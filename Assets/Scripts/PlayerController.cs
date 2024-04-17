@@ -70,7 +70,7 @@ public class PlayerController : MonoBehaviour
     {      
         if (Input.GetKeyDown(KeyCode.X))
         {
-            xpBar.addXP(15);
+            xpBar.AddXP(15);
         }
         // Get the movement input from the player
         GetMovementInput();

@@ -11,10 +11,11 @@ public class CharacterProjectile : MonoBehaviour
     /// </summary>
     private bool _hitSomething;
 
-    public void Shoot(Vector2 direction, float speed)
+    // Start is called before the first frame update
+    private void Start()
     {
-        _direction = direction;
-        this.speed = speed;
+        // destroy the projectile after 10 seconds
+        Destroy(gameObject, 10);
     }
 
     // Update is called once per frame
@@ -24,6 +25,12 @@ public class CharacterProjectile : MonoBehaviour
         Move();
     }
 
+    public void Shoot(Vector2 direction, float speed)
+    {
+        _direction = direction;
+        this.speed = speed;
+    }
+    
     private void OnTriggerEnter2D(Collider2D other)
     {
         // If the projectile has already hit something, return

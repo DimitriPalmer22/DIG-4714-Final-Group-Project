@@ -20,13 +20,13 @@ public class XP_Bar : MonoBehaviour
     }
 
 
-    public void addXP(float xp)
+    public void AddXP(float xp)
     {
         xpBar.value += (xp / 100);
 
-        if(xpBar.value >= 1)
+        while(xpBar.value >= 1)
         {
-            xpBar.value = 0;
+            xpBar.value -= 1;
             LevelUp();
         }
     }

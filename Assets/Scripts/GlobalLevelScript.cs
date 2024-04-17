@@ -18,6 +18,8 @@ public class GlobalLevelScript : MonoBehaviour
 
     [SerializeField] private GameObject _gameOverMenuParent;
 
+    [SerializeField] private XP_Bar xpBar;
+    
     #endregion
 
     #region Properties
@@ -26,7 +28,7 @@ public class GlobalLevelScript : MonoBehaviour
     /// The instance allows us to access the level script from any script.
     /// </summary>
     public static GlobalLevelScript Instance { get; private set; }
-
+    
     /// <summary>
     /// The player's score
     /// </summary>
@@ -40,6 +42,11 @@ public class GlobalLevelScript : MonoBehaviour
     // A boolean to check if the player is dead
     public bool IsPlayerDead { get; private set; }
 
+    /// <summary>
+    /// The player's XP bar 
+    /// </summary>
+    public XP_Bar XpBar => xpBar;    
+    
     #endregion
 
     #region Unity Methods

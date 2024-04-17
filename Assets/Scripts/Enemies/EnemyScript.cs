@@ -39,6 +39,7 @@ public abstract class EnemyScript : Actor
         // Subscribe to the OnDeath event
         OnDeath += DestroyOnDeath;
         OnDeath += AddToScoreOnDeath;
+        OnDeath += AddXPOnDeath;
     }
     
     protected virtual void Update()
@@ -70,6 +71,11 @@ public abstract class EnemyScript : Actor
     private void AddToScoreOnDeath()
     {
         GlobalLevelScript.Instance.ChangeScore(scoreValue);
+    }
+
+    private void AddXPOnDeath()
+    {
+        GlobalLevelScript.Instance.XpBar.AddXP(scoreValue);
     }
 
     #endregion Methods
