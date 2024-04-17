@@ -26,7 +26,11 @@ public abstract class CharacterWeaponInfo : MonoBehaviour
         weaponInfo.projectilePrefab = projectilePrefab;
         weaponInfo.fireCooldown = fireCooldown;
         weaponInfo.projectileVelocity = projectileVelocity;
+        
+        CustomCopy(weaponInfo);
     }
-    
+
+    protected abstract void CustomCopy(CharacterWeaponInfo weaponInfo);
+
     #endregion Methods
 }

@@ -19,7 +19,12 @@ public class CharacterWeapon : MonoBehaviour
     /// </summary>
     private bool _canShoot = true;
 
+    /// <summary>
+    /// A reference to the weapon info script
+    /// </summary>
     private CharacterWeaponInfo weaponInfo;
+
+    private float _cooldownTimeRemaining;
 
     #endregion Fields
 
@@ -49,8 +54,11 @@ public class CharacterWeapon : MonoBehaviour
         weaponInfo.weapon = this;
     }
 
-    protected virtual void Update()
+    protected void Update()
     {
+        // Update the cooldown
+        UpdateCooldown();
+
         if (character.MovementInput != Vector2.zero)
             fireDirection = character.MovementInput.normalized;
     }
@@ -64,19 +72,23 @@ public class CharacterWeapon : MonoBehaviour
         // If the weapon can't shoot, return
         if (!_canShoot)
             return;
+        
+        // Set the can shoot variable to false
+        _canShoot = false;
+        
+        // reset the cooldown time
+        _cooldownTimeRemaining = weaponInfo.fireCooldown;
 
         // Run the custom fire method
         weaponInfo.CustomFire();
-
-        // Set the can shoot variable to false
-        _canShoot = false;
-
-        // Reset the can shoot variable
-        Invoke(nameof(ResetCanShoot), weaponInfo.fireCooldown);
     }
 
     public void ChangeWeaponInfo(CharacterWeaponInfo weaponInfo)
     {
+        // set the can shoot variable to true
+        _canShoot = true;
+        _cooldownTimeRemaining = 0;
+        
         // Remove the current weapon info
         Destroy(this.weaponInfo);
         this.weaponInfo = null;
@@ -89,8 +101,14 @@ public class CharacterWeapon : MonoBehaviour
         weaponInfo.CopyInformationTo(this.weaponInfo);
     }
 
-    private void ResetCanShoot()
+    private void UpdateCooldown()
     {
+        _cooldownTimeRemaining -= Time.deltaTime;
+
+        if (_cooldownTimeRemaining > 0) 
+            return;
+        
+        _cooldownTimeRemaining = 0;
         _canShoot = true;
     }
 
