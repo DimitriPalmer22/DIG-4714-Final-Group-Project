@@ -1,9 +1,10 @@
 using System;
-using Unity.VisualScripting.Dependencies.NCalc;
 using UnityEngine;
 
 public class CharacterProjectile : MonoBehaviour
 {
+    private const float LIFE_TIME = 5;
+    
     private Vector2 _direction;
     [SerializeField] private float speed;
     
@@ -11,6 +12,16 @@ public class CharacterProjectile : MonoBehaviour
     /// A flag to check if the projectile has hit something
     /// </summary>
     private bool _hitSomething;
+    
+    /// <summary>
+    /// Used to keep track of how long the projectile has been alive
+    /// </summary>
+    private float _timePassed;
+
+    /// <summary>
+    /// How much damage the projectile does to the enemies.
+    /// </summary>
+    private int _damage;
 
     // Start is called before the first frame update
     private void Start()
@@ -24,18 +35,18 @@ public class CharacterProjectile : MonoBehaviour
     {
         // Move the projectile
         Move();
-        var timePassed = Time.deltaTime;
-        if(timePassed > 3)
-        {
+        
+        // Destroy the projectile after {LIFE_TIME} seconds
+        _timePassed += Time.deltaTime;
+        if(_timePassed >= LIFE_TIME)
             Destroy(this);
-            timePassed = 0;
-        }
     }
 
-    public void Shoot(Vector2 direction, float speed)
+    public void Shoot(Vector2 direction, float speed, int damage)
     {
         _direction = direction;
         this.speed = speed;
+        _damage = damage;
     }
     
     private void OnTriggerEnter2D(Collider2D other)
@@ -55,7 +66,7 @@ public class CharacterProjectile : MonoBehaviour
         var enemy = other.GetComponent<EnemyScript>();
 
         // Make the enemy take damage
-        enemy.ChangeHealth(-1);
+        enemy.ChangeHealth(-_damage);
 
         // Destroy the projectile
         Destroy(gameObject);

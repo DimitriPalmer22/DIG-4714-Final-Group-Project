@@ -37,7 +37,7 @@ public class BurstWeaponInfo : CharacterWeaponInfo
             // Get the projectile script
             var projectileScript = projectile.GetComponent<CharacterProjectile>();
 
-            projectileScript.Shoot(weapon.FireDirection, projectileVelocity + weapon.Character.Speed);
+            projectileScript.Shoot(weapon.FireDirection, projectileVelocity + weapon.Character.Speed, weapon.Damage);
 
             yield return new WaitForSeconds(burstDuration / projectileCount);
         }

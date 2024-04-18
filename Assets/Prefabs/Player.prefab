@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4232035106369402748}
   - component: {fileID: 4232035106369402751}
+  - component: {fileID: 8687759380488458876}
   - component: {fileID: 3822477501992308850}
   - component: {fileID: 4732601643472182426}
   - component: {fileID: 3514001315218393691}
-  - component: {fileID: 8687759380488458876}
   - component: {fileID: 4171312826083138871}
   - component: {fileID: 5346005118237722439}
   m_Layer: 0
@@ -90,6 +90,27 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &8687759380488458876
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4232035106369402750}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 6ac050da853371e489230c46e76bfeed, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!50 &3822477501992308850
 Rigidbody2D:
   serializedVersion: 4
@@ -123,7 +144,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 644371f6f98043b4e8b6efeac38e8ded, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  xpBar: {fileID: 1050551195490121476, guid: 06ea8bc3feccea9498d22d14dbaa4ca2, type: 3}
+  speedModifier: 0
 --- !u!114 &3514001315218393691
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -139,27 +160,6 @@ MonoBehaviour:
   _currentHealth: 3
   _maxHealth: 3
   _healthText: {fileID: 0}
---- !u!95 &8687759380488458876
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4232035106369402750}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 6ac050da853371e489230c46e76bfeed, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &4171312826083138871
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -172,6 +172,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc0c71ac11114676843da4d94a59b19a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _damage: 1
 --- !u!114 &5346005118237722439
 MonoBehaviour:
   m_ObjectHideFlags: 0

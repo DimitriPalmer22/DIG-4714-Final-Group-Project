@@ -21,7 +21,7 @@ public abstract class CharacterWeaponInfo : MonoBehaviour
 
     public abstract void CustomFire();
 
-    public virtual void CopyInformationTo(CharacterWeaponInfo weaponInfo)
+    public void CopyInformationTo(CharacterWeaponInfo weaponInfo)
     {
         weaponInfo.projectilePrefab = projectilePrefab;
         weaponInfo.fireCooldown = fireCooldown;

@@ -7,12 +7,12 @@ public class CharacterWeapon : MonoBehaviour
     /// <summary>
     /// A reference to the character script
     /// </summary>
-    protected Character character;
+    private Character character;
 
     /// <summary>
     /// The direction the bullet will travel in when fired
     /// </summary>
-    protected Vector2 fireDirection;
+    private Vector2 fireDirection;
 
     /// <summary>
     /// A flag to determine if the weapon can shoot
@@ -24,7 +24,15 @@ public class CharacterWeapon : MonoBehaviour
     /// </summary>
     private CharacterWeaponInfo weaponInfo;
 
+    /// <summary>
+    /// How long the weapon has to wait before it can shoot again
+    /// </summary>
     private float _cooldownTimeRemaining;
+
+    /// <summary>
+    /// How much damage the projectile does to the enemies.
+    /// </summary>
+    [SerializeField] private int _damage;
 
     #endregion Fields
 
@@ -33,13 +41,15 @@ public class CharacterWeapon : MonoBehaviour
     public Vector2 FireDirection => fireDirection;
 
     public Character Character => character;
+    
+    public int Damage => _damage;
 
     #endregion Properties
 
     #region Unity Methods
 
     // Start is called before the first frame update
-    protected virtual void Start()
+    protected void Start()
     {
         // Get the character script
         character = GetComponent<Character>();

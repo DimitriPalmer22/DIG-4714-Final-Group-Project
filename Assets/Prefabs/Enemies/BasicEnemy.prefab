@@ -104,7 +104,6 @@ MonoBehaviour:
   _maxHealth: 3
   chaseSpeed: 2
   scoreValue: 10
-  EnemyDeath: {fileID: 0}
 --- !u!61 &8089740001568518730
 BoxCollider2D:
   m_ObjectHideFlags: 0
