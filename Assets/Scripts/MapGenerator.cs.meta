@@ -3,7 +3,11 @@ guid: 77fd1636e0ae0c24db1b9b29b5e8578e
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - tilePrefab: {fileID: 6579192701089380753, guid: d12cf5288d5241349bf7c4144196fd94, type: 3}
+  - borderTilePrefab: {fileID: 6579192701089380753, guid: 9f8a5fa628ba9a9429ba74aa8da0176b, type: 3}
+  - obstacleTilePrefab: {instanceID: 0}
+  - startingPoint: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
