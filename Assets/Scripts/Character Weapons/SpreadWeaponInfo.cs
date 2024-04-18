@@ -39,7 +39,7 @@ public class SpreadWeaponInfo : CharacterWeaponInfo
             var projectileScript = projectile.GetComponent<CharacterProjectile>();
             
             // Shoot the projectile
-            projectileScript.Shoot(direction, projectileVelocity + weapon.Character.Speed);
+            projectileScript.Shoot(direction, projectileVelocity + weapon.Character.Speed, weapon.Damage);
         }
     }
 

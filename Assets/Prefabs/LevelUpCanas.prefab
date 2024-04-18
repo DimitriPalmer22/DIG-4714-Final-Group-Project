@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8572801280142172736}
   - component: {fileID: 5997011726903987549}
   m_Layer: 5
-  m_Name: Button (2)
+  m_Name: Health Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -148,7 +148,7 @@ GameObject:
   - component: {fileID: 3866684736213367612}
   - component: {fileID: 3742262086382921754}
   m_Layer: 5
-  m_Name: Button
+  m_Name: Damage Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -261,7 +261,7 @@ MonoBehaviour:
       - m_Target: {fileID: 3274422264585962279}
         m_TargetAssemblyTypeName: LevelUpScript, Assembly-CSharp
         m_MethodName: SelectedPowerup
-        m_Mode: 1
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -494,7 +494,7 @@ GameObject:
   - component: {fileID: 8655604171469528694}
   - component: {fileID: 1529798162612584773}
   m_Layer: 5
-  m_Name: Button (1)
+  m_Name: Speed Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

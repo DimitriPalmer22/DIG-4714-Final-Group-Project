@@ -39,8 +39,6 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private Vector2 _direction;
 
-    [SerializeField] private XP_Bar xpBar;
-    
     /// <summary>
     /// A reference to the character's weapon
     /// </summary>
@@ -77,14 +75,8 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {      
-        if (Input.GetKeyDown(KeyCode.X))
-        {
-            xpBar.AddXP(15);
-        }
         // Get the movement input from the player
         GetMovementInput();
-
- 
     }
 
     private void FixedUpdate()

@@ -12,6 +12,8 @@ public class XP_Bar : MonoBehaviour
 
     [SerializeField] private GameObject levelUpOptions;
     private int level;
+    
+    public int Level => level;
 
     void Start()
     {
@@ -24,7 +26,7 @@ public class XP_Bar : MonoBehaviour
     {
         xpBar.value += (xp / 100);
 
-        while(xpBar.value >= 1)
+        while (xpBar.value >= 1)
         {
             xpBar.value -= 1;
             LevelUp();
@@ -37,6 +39,5 @@ public class XP_Bar : MonoBehaviour
         Debug.Log("Level up! " + level);
         levelText.text = $"Aggression Level: {level}";
         levelUpOptions.SetActive(true);
-
     }
 }
