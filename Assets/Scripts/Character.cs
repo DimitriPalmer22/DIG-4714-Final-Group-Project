@@ -79,6 +79,7 @@ public class Character : Actor
 
     #region Methods
 
+
     public override void ChangeHealth(int changeAmount)
     {
         // If the character is dead, return

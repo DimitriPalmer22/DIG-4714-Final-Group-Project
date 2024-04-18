@@ -121,6 +121,12 @@ public class CharacterWeapon : MonoBehaviour
         _cooldownTimeRemaining = 0;
         _canShoot = true;
     }
+    
+    public void IncreaseWeaponDamage(int amount)
+    {
+        // Increase the weapon's damage
+        _damage += amount;
+    }
 
     #endregion Methods
 }
