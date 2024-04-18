@@ -529,14 +529,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Burst Weapon Pickup
       objectReference: {fileID: 0}
-    - target: {fileID: 7227955559923751768, guid: bba5b486b7b84e04a8fd1c5c80ca9178, type: 3}
-      propertyPath: m_Color.g
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7227955559923751768, guid: bba5b486b7b84e04a8fd1c5c80ca9178, type: 3}
-      propertyPath: m_Color.r
-      value: 0.007769227
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bba5b486b7b84e04a8fd1c5c80ca9178, type: 3}
 --- !u!1001 &1983318153

@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-
     [SerializeField] private GameObject _enemyPrefab;
 
     [SerializeField] private float minSpawnTime;
@@ -15,6 +14,12 @@ public class EnemySpawner : MonoBehaviour
     private Vector3 spawnPos;
     private float spawnX;
     private float spawnY;
+
+    /// <summary>
+    /// How much the enemy's health will be modified when they are spawned.
+    /// </summary>
+    [SerializeField] private int healthModifier;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -26,12 +31,19 @@ public class EnemySpawner : MonoBehaviour
     {
         spawnInterval -= Time.deltaTime;
 
-        if(spawnInterval <= 0)
-        {
-            RandomLocation();
-            Instantiate(_enemyPrefab, spawnPos, Quaternion.identity);
-            SetTimeUntilSpawn();
-        }
+        if (spawnInterval <= 0)
+            SpawnEnemy();
+    }
+
+    private void SpawnEnemy()
+    {
+        RandomLocation();
+        var enemy = Instantiate(_enemyPrefab, spawnPos, Quaternion.identity);
+        SetTimeUntilSpawn();
+        
+        // Modify the enemy's health
+        healthModifier = GlobalLevelScript.Instance.XpBar.Level / 5;
+        enemy.GetComponent<Actor>().ModifyHealth(healthModifier);
     }
 
     private void SetTimeUntilSpawn()
@@ -44,16 +56,16 @@ public class EnemySpawner : MonoBehaviour
         spawnX = Random.Range(-0.1f, 0.1f);
         spawnY = Random.Range(-0.1f, 0.1f);
 
-        if(spawnX < 0)
+        if (spawnX < 0)
         {
             spawnX -= 1;
         }
-        else if(spawnX >= 0)
+        else if (spawnX >= 0)
         {
             spawnX += 1;
         }
 
-        
+
         if (spawnY < 0)
         {
             spawnY -= 1;

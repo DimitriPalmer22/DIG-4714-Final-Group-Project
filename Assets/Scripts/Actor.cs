@@ -6,9 +6,9 @@ public abstract class Actor : MonoBehaviour
     public delegate void DeathEventHandler();
 
     #region Fields
-    
+
     private IEnumerator _currentFlashCoroutine;
-    
+
     /// <summary>
     /// The animator for the player
     /// </summary>
@@ -29,7 +29,7 @@ public abstract class Actor : MonoBehaviour
     /// false = right, true = left
     /// </summary>
     protected bool _direction;
-    
+
     /// <summary>
     /// The character's health
     /// </summary>
@@ -41,9 +41,9 @@ public abstract class Actor : MonoBehaviour
     [SerializeField] protected int _maxHealth;
 
     public event DeathEventHandler OnDeath;
-    
-    #endregion 
-    
+
+    #endregion
+
     #region Properties
 
     /// <summary>
@@ -51,7 +51,7 @@ public abstract class Actor : MonoBehaviour
     /// Implemented differently based on the actor's type (Player Character vs Enemy).
     /// </summary>
     public abstract float Speed { get; }
-    
+
     /// <summary>
     /// The character's movement input vector
     /// </summary>
@@ -60,7 +60,7 @@ public abstract class Actor : MonoBehaviour
         get => _movementInput;
         set => _movementInput = value;
     }
-    
+
     /// <summary>
     /// Test if the character is facing left
     /// </summary>
@@ -70,7 +70,7 @@ public abstract class Actor : MonoBehaviour
     /// // Test if the character is facing right
     /// </summary>
     public bool FacingRight => !_direction;
-    
+
     #endregion Properties
 
     #region Unity Methods
@@ -80,16 +80,15 @@ public abstract class Actor : MonoBehaviour
     {
         // Set the character's health to the max health
         _currentHealth = _maxHealth;
-        
+
         // Get the actor's sprite renderer
         _spriteRenderer = GetComponent<SpriteRenderer>();
     }
-    
+
     #endregion
-    
+
     #region Methods
 
-    
     /// <summary>
     /// Determine the character's direction and flip the sprite based on the direction.
     /// </summary>
@@ -116,10 +115,10 @@ public abstract class Actor : MonoBehaviour
         // Do not change the character's health if the character is already dead
         if (_currentHealth <= 0)
             return;
-        
+
         // Update the character's health
         _currentHealth += changeAmount;
-        
+
         // clamp the player's current Health to the range 0 to _maxHealth
         _currentHealth = Mathf.Clamp(_currentHealth, 0, _maxHealth);
 
@@ -137,22 +136,32 @@ public abstract class Actor : MonoBehaviour
                 Flash(Color.green);
                 break;
         }
-        
+
         // Invoke the OnDeath event if the character's health is 0
         if (_currentHealth <= 0)
             OnDeath?.Invoke();
     }
-    
+
+    /// <summary>
+    /// Change the current and max health of the character by a specific amount.
+    /// </summary>
+    /// <param name="amount"></param>
+    public void ModifyHealth(int amount)
+    {
+        _maxHealth += amount;
+        _currentHealth = Mathf.Clamp(_currentHealth + amount, 0, _maxHealth);
+    }
+
     protected void Flash(Color flashColor, float totalFlashTime = 1f, float blinkTime = .2f)
     {
         if (_currentFlashCoroutine != null)
             StopCoroutine(_currentFlashCoroutine);
 
         _currentFlashCoroutine = FlashSpriteColor(flashColor, totalFlashTime, blinkTime);
-        
+
         StartCoroutine(_currentFlashCoroutine);
     }
-    
+
     /// <summary>
     /// A coroutine to flash the character's sprite to a specific color.
     /// THIS METHOD IS ONLY TO BE CALLED FROM THE "FLASH" METHOD.
@@ -165,19 +174,17 @@ public abstract class Actor : MonoBehaviour
         {
             // Set the sprite color to the flash color
             _spriteRenderer.color = flashColor;
-        
+
             // Wait for half of the blink time
             yield return new WaitForSeconds(blinkTime / 2);
-        
+
             // Set the sprite color back to white
             _spriteRenderer.color = Color.white;
-            
+
             // Wait for half of the blink time
             yield return new WaitForSeconds(blinkTime / 2);
         }
-
     }
 
     #endregion Methods
-    
 }
