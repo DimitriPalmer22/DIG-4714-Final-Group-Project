@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    [SerializeField] private GameObject _enemyPrefab;
-
+    [SerializeField] private GameObject[] _enemyPrefabs;
+    
     [SerializeField] private float minSpawnTime;
     [SerializeField] private float maxSpawnTime;
 
@@ -38,7 +38,10 @@ public class EnemySpawner : MonoBehaviour
     private void SpawnEnemy()
     {
         RandomLocation();
-        var enemy = Instantiate(_enemyPrefab, spawnPos, Quaternion.identity);
+        
+        var enemyPrefab = _enemyPrefabs[Random.Range(0, _enemyPrefabs.Length)];
+        
+        var enemy = Instantiate(enemyPrefab, spawnPos, Quaternion.identity);
         SetTimeUntilSpawn();
         
         // Modify the enemy's health
