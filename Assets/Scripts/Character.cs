@@ -1,15 +1,18 @@
+using System;
 using TMPro;
 using UnityEngine;
 
+[Serializable]
 public class Character : Actor
 {
     #region Fields
-
 
     /// <summary>
     /// A text object to display the character's health / lives
     /// </summary>
     [SerializeField] private TMP_Text _healthText;
+
+    private Rigidbody2D _rb;
     
     #endregion
 
@@ -42,9 +45,6 @@ public class Character : Actor
                 case CharacterClass.Spread:
                     classSpeed = 4;
                     break;
-
-                default:
-                    break;
             }
             
             return classSpeed;
@@ -56,24 +56,24 @@ public class Character : Actor
     #region Unity Methods
 
     // Start is called before the first frame update
-    private void Start()
+    protected override void Start()
     {
-        // Get the character's sprite renderer
-        _spriteRenderer = GetComponent<SpriteRenderer>();
+        base.Start();
+        
+        // Get the character's rigid body
+        _rb = GetComponent<Rigidbody2D>();
         
         // Get the character's animations
         _animator = GetComponent<Animator>();
         
         // Set the character's health text
         UpdateHealthText();
+        
+        OnDeath += LogDeath;
+        OnDeath += FlashBlackOnDeath;
+        OnDeath += FreezeRigidBodyOnDeath;
+        OnDeath += GlobalLevelScript.Instance.OnPlayerDeath;
     }
-
-    // Update is called once per frame
-    private void Update()
-    {
-
-    }
-
 
     #endregion
 
@@ -81,14 +81,35 @@ public class Character : Actor
 
     public override void ChangeHealth(int changeAmount)
     {
+        // If the character is dead, return
+        if (_currentHealth <= 0)
+            return;
+        
         base.ChangeHealth(changeAmount);
-        Debug.Log("Hit");
+        
         UpdateHealthText();
     }
     
     private void UpdateHealthText()
     {
         _healthText.text = $"x{_currentHealth}";
+    }
+
+    private void LogDeath()
+    {
+        // Log the character's death
+        Debug.Log("The character has died!");
+    }
+    
+    
+    private void FlashBlackOnDeath()
+    {
+        Flash(Color.black, 30, .5f);
+    }
+    
+    private void FreezeRigidBodyOnDeath()
+    {
+        _rb.constraints = RigidbodyConstraints2D.FreezeAll;
     }
 
     #endregion

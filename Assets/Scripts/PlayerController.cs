@@ -37,6 +37,13 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private Vector2 _direction;
 
+    [SerializeField] private XP_Bar xpBar;
+    
+    /// <summary>
+    /// A reference to the character's weapon
+    /// </summary>
+    private CharacterWeapon _characterWeapon;
+
     #endregion Fields
 
     #region Unity Methods
@@ -52,13 +59,22 @@ public class PlayerController : MonoBehaviour
 
         // Get the character's animator
         _animator = GetComponent<Animator>();
+        
+        // Get the character's weapon
+        _characterWeapon = GetComponent<CharacterWeapon>();
     }
 
     // Update is called once per frame
     private void Update()
-    {
+    {      
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            xpBar.AddXP(15);
+        }
         // Get the movement input from the player
         GetMovementInput();
+
+ 
     }
 
     private void FixedUpdate()
@@ -83,8 +99,13 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private void GetMovementInput()
     {
+        // Set the movement input to zero
+        _actorScript.MovementInput = Vector2.zero;
+
         // If the game is paused, don't get any input
-        if (GlobalLevelScript.Instance.IsPaused)
+        // If the player is dead, don't get any input
+        if (GlobalLevelScript.Instance.IsPaused ||
+            GlobalLevelScript.Instance.IsPlayerDead)
             return;
 
         // Create a vector2 of the horizontal and vertical input axes
@@ -93,6 +114,10 @@ public class PlayerController : MonoBehaviour
         // Normalize the vector to prevent faster diagonal movement
         _actorScript.MovementInput.Normalize();
 
+        // Shoot if the player presses space
+        if (Input.GetKey(KeyCode.Space))
+            _characterWeapon.Fire();
+        
         // TODO: Delete Later
 
         // Take damage if the player presses the "q" key
@@ -102,14 +127,16 @@ public class PlayerController : MonoBehaviour
         // Heal if the player presses the "e" key
         if (Input.GetKeyDown(KeyCode.E))
             _actorScript.ChangeHealth(1);
-        
+
         // Change the score if the player presses the "r" or "t" key
         if (Input.GetKeyDown(KeyCode.R))
             GlobalLevelScript.Instance.ChangeScore(-5);
-        
+
         if (Input.GetKeyDown(KeyCode.T))
             GlobalLevelScript.Instance.ChangeScore(5);
 
+        if (Input.GetKeyDown(KeyCode.L))
+            GameManagerScript.Instance.SaveGame();
     }
 
     /// <summary>
@@ -128,8 +155,10 @@ public class PlayerController : MonoBehaviour
 
         // Change the character's animation if the direction or speed has changed
         if (prevDirection != _direction.normalized ||
-            Math.Abs(SpeedAnimationHelper(prevSpeed.magnitude) - SpeedAnimationHelper(_rb.velocity.normalized.magnitude)) > 0.01f
-        )
+            Math.Abs(
+                SpeedAnimationHelper(prevSpeed.magnitude) - SpeedAnimationHelper(_rb.velocity.normalized.magnitude)) >
+            0.01f
+           )
             _animator.SetTrigger(ChangeAnimation);
 
         // Change the direction the character is facing

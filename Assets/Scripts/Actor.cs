@@ -3,8 +3,11 @@ using UnityEngine;
 
 public abstract class Actor : MonoBehaviour
 {
+    public delegate void DeathEventHandler();
 
     #region Fields
+    
+    private IEnumerator _currentFlashCoroutine;
     
     /// <summary>
     /// The animator for the player
@@ -37,6 +40,8 @@ public abstract class Actor : MonoBehaviour
     /// </summary>
     [SerializeField] protected int _maxHealth;
 
+    public event DeathEventHandler OnDeath;
+    
     #endregion 
     
     #region Properties
@@ -71,21 +76,13 @@ public abstract class Actor : MonoBehaviour
     #region Unity Methods
 
     // Start is called before the first frame update
-    private void Start()
+    protected virtual void Start()
     {
         // Set the character's health to the max health
         _currentHealth = _maxHealth;
-    }
-
-    // Update is called once per frame
-    private void Update()
-    {
         
-    }
-
-    private void LateUpdate()
-    {
-        
+        // Get the actor's sprite renderer
+        _spriteRenderer = GetComponent<SpriteRenderer>();
     }
     
     #endregion
@@ -116,36 +113,53 @@ public abstract class Actor : MonoBehaviour
     /// <param name="changeAmount">The amount of health to change the character's health by</param>
     public virtual void ChangeHealth(int changeAmount)
     {
-        // If the amount is negative, the character is taking damage
-        if (changeAmount < 0)
-        {
-            // Start a coroutine to flash the character's sprite red
-            StartCoroutine(FlashSpriteColor(Color.red));
-        }
-        
-        // If the amount is positive, the character is healing
-        else if (changeAmount > 0)
-        {
-            // Start a coroutine to flash the character's sprite red
-            StartCoroutine(FlashSpriteColor(Color.green));
-        }
+        // Do not change the character's health if the character is already dead
+        if (_currentHealth <= 0)
+            return;
         
         // Update the character's health
         _currentHealth += changeAmount;
         
         // clamp the player's current Health to the range 0 to _maxHealth
         _currentHealth = Mathf.Clamp(_currentHealth, 0, _maxHealth);
+
+        switch (changeAmount)
+        {
+            // If the amount is negative, the character is taking damage
+            // Do not do this if the character is already dead
+            case < 0 when _currentHealth > 0:
+                // Start a coroutine to flash the character's sprite red
+                Flash(Color.red);
+                break;
+            // If the amount is positive, the character is healing
+            case > 0:
+                // Start a coroutine to flash the character's sprite red
+                Flash(Color.green);
+                break;
+        }
+        
+        // Invoke the OnDeath event if the character's health is 0
+        if (_currentHealth <= 0)
+            OnDeath?.Invoke();
+    }
+    
+    protected void Flash(Color flashColor, float totalFlashTime = 1f, float blinkTime = .2f)
+    {
+        if (_currentFlashCoroutine != null)
+            StopCoroutine(_currentFlashCoroutine);
+
+        _currentFlashCoroutine = FlashSpriteColor(flashColor, totalFlashTime, blinkTime);
+        
+        StartCoroutine(_currentFlashCoroutine);
     }
     
     /// <summary>
     /// A coroutine to flash the character's sprite to a specific color.
+    /// THIS METHOD IS ONLY TO BE CALLED FROM THE "FLASH" METHOD.
     /// </summary>
     /// <returns></returns>
-    private IEnumerator FlashSpriteColor(Color flashColor)
+    private IEnumerator FlashSpriteColor(Color flashColor, float totalFlashTime, float blinkTime)
     {
-        float blinkTime = 0.2f;
-        float totalFlashTime = 1f;
-        
         // Loop through the flash time to make the sprite blink
         for (float currentFlashTime = 0; currentFlashTime < totalFlashTime; currentFlashTime += blinkTime)
         {
@@ -164,7 +178,6 @@ public abstract class Actor : MonoBehaviour
 
     }
 
-    
     #endregion Methods
     
 }
