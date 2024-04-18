@@ -28,7 +28,7 @@ RectTransform:
   m_GameObject: {fileID: 820211685271154019}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 4.1578145, y: 6.797696, z: 5.2797637}
+  m_LocalScale: {x: 3.7902637, y: 6.1967797, z: 4.8130326}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1293085423576571153}
@@ -38,7 +38,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 726.51, y: -5.8171997}
+  m_AnchoredPosition: {x: 660, y: -5.8171997}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &127603403969015536
@@ -126,11 +126,11 @@ MonoBehaviour:
       - m_Target: {fileID: 3274422264585962279}
         m_TargetAssemblyTypeName: LevelUpScript, Assembly-CSharp
         m_MethodName: SelectedPowerup
-        m_Mode: 1
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 2
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -163,7 +163,7 @@ RectTransform:
   m_GameObject: {fileID: 3730021851547776706}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 4.1578145, y: 6.797696, z: 5.2797637}
+  m_LocalScale: {x: 3.7902637, y: 6.1967797, z: 4.8130326}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7793148210860008036}
@@ -173,7 +173,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -664.51, y: -5.8171997}
+  m_AnchoredPosition: {x: -628, y: -5.8171997}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6472590145941289647
@@ -509,7 +509,7 @@ RectTransform:
   m_GameObject: {fileID: 4622106866989917919}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 4.1578145, y: 6.797696, z: 5.2797637}
+  m_LocalScale: {x: 3.7902637, y: 6.1967797, z: 4.8130326}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4748002836819698108}
@@ -519,7 +519,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 37.624, y: -5.8171997}
+  m_AnchoredPosition: {x: 19, y: -5.8171997}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2956895518708723246
@@ -607,11 +607,11 @@ MonoBehaviour:
       - m_Target: {fileID: 3274422264585962279}
         m_TargetAssemblyTypeName: LevelUpScript, Assembly-CSharp
         m_MethodName: SelectedPowerup
-        m_Mode: 1
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0

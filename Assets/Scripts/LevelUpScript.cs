@@ -20,9 +20,23 @@ public class LevelUpScript : MonoBehaviour
     }
 
 
-    public void SelectedPowerup()
+    public void SelectedPowerup(int i)
     {
-        //edit player stats here
+
+        switch (i)
+        {
+            case 0:
+                //Increase damage here (everything is one shot rn)
+                break;
+            case 1:
+                //Increase Move Speed
+                PlayerController.Instance.speedModifier += 1;
+                break;
+            case 2:
+                //Heal 1
+                PlayerController.Instance.gameObject.GetComponent<Character>().ChangeHealth(1);
+                break;
+        }
         this.gameObject.SetActive(false);
         Time.timeScale = 1f;
     }

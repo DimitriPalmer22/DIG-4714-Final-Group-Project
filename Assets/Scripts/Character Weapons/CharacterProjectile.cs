@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting.Dependencies.NCalc;
 using UnityEngine;
 
 public class CharacterProjectile : MonoBehaviour
@@ -23,6 +24,12 @@ public class CharacterProjectile : MonoBehaviour
     {
         // Move the projectile
         Move();
+        var timePassed = Time.deltaTime;
+        if(timePassed > 3)
+        {
+            Destroy(this);
+            timePassed = 0;
+        }
     }
 
     public void Shoot(Vector2 direction, float speed)

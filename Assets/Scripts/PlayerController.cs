@@ -12,6 +12,8 @@ public class PlayerController : MonoBehaviour
     private static readonly int SpeedForAnimation = Animator.StringToHash("Speed");
     private static readonly int ChangeAnimation = Animator.StringToHash("ChangeAnimation");
 
+    public static PlayerController Instance { get; private set; }
+
     #endregion
 
     #region Fields
@@ -44,6 +46,8 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private CharacterWeapon _characterWeapon;
 
+    public int speedModifier;
+
     #endregion Fields
 
     #region Unity Methods
@@ -62,6 +66,12 @@ public class PlayerController : MonoBehaviour
         
         // Get the character's weapon
         _characterWeapon = GetComponent<CharacterWeapon>();
+        
+        if(Instance == null)
+        {
+            Instance = this;
+        }
+        
     }
 
     // Update is called once per frame
@@ -151,7 +161,7 @@ public class PlayerController : MonoBehaviour
         var prevSpeed = _rb.velocity;
 
         // Apply the movement input to the character's rigid body
-        _rb.velocity = _actorScript.MovementInput * _actorScript.Speed;
+        _rb.velocity = _actorScript.MovementInput * (_actorScript.Speed + speedModifier);
 
         // Change the character's animation if the direction or speed has changed
         if (prevDirection != _direction.normalized ||
