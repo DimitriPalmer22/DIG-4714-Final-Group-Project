@@ -35,7 +35,7 @@ public class XP_Bar : MonoBehaviour
     {
         level += 1;
         Debug.Log("Level up! " + level);
-        levelText.text = $"Level: {level}";
+        levelText.text = $"Aggression Level: {level}";
         levelUpOptions.SetActive(true);
 
     }
