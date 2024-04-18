@@ -68,17 +68,17 @@ public class CharacterWeapon : MonoBehaviour
     {
         // Update the cooldown
         UpdateCooldown();
-
-        if (character.MovementInput != Vector2.zero)
-            fireDirection = character.MovementInput.normalized;
     }
 
     #endregion
 
     #region Methods
 
-    public void Fire()
+    public void Fire(Vector2 direction)
     {
+        // Set the firing direction
+        fireDirection = direction;
+        
         // If the weapon can't shoot, return
         if (!_canShoot)
             return;

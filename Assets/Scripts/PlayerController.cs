@@ -14,6 +14,11 @@ public class PlayerController : MonoBehaviour
 
     public static PlayerController Instance { get; private set; }
 
+    private const KeyCode FireUp = KeyCode.UpArrow;
+    private const KeyCode FireDown = KeyCode.DownArrow;
+    private const KeyCode FireLeft = KeyCode.LeftArrow;
+    private const KeyCode FireRight = KeyCode.RightArrow;
+
     #endregion
 
     #region Fields
@@ -46,6 +51,8 @@ public class PlayerController : MonoBehaviour
 
     public int speedModifier;
 
+    private Vector2 _fireDirection;
+
     #endregion Fields
 
     #region Unity Methods
@@ -61,20 +68,19 @@ public class PlayerController : MonoBehaviour
 
         // Get the character's animator
         _animator = GetComponent<Animator>();
-        
+
         // Get the character's weapon
         _characterWeapon = GetComponent<CharacterWeapon>();
-        
-        if(Instance == null)
+
+        if (Instance == null)
         {
             Instance = this;
         }
-        
     }
 
     // Update is called once per frame
     private void Update()
-    {      
+    {
         // Get the movement input from the player
         GetMovementInput();
     }
@@ -83,6 +89,9 @@ public class PlayerController : MonoBehaviour
     {
         // Move the character based on the movement input vector
         MovePlayer();
+
+        // Fire the weapon based on the fire input vector
+        GetFireInput();
     }
 
     private void LateUpdate()
@@ -111,15 +120,14 @@ public class PlayerController : MonoBehaviour
             return;
 
         // Create a vector2 of the horizontal and vertical input axes
-        _actorScript.MovementInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+        _actorScript.MovementInput = new Vector2(
+            Input.GetAxisRaw("Horizontal"),
+            Input.GetAxisRaw("Vertical")
+        );
 
         // Normalize the vector to prevent faster diagonal movement
         _actorScript.MovementInput.Normalize();
 
-        // Shoot if the player presses space
-        if (Input.GetKey(KeyCode.Space))
-            _characterWeapon.Fire();
-        
         // TODO: Delete Later
 
         // Take damage if the player presses the "q" key
@@ -139,6 +147,44 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.L))
             GameManagerScript.Instance.SaveGame();
+    }
+
+    private void GetFireInput()
+    {
+        // flag to check if the player has fired
+        var fired = false;
+        
+        float fireHorizontal = 0;
+        float fireVertical = 0;
+
+        // Get the fire input from the player
+        if (Input.GetKey(FireUp))
+        {
+            fireVertical = 1;
+            fired = true;            
+        }
+        else if (Input.GetKey(FireDown))
+        {
+            fireVertical = -1;
+            fired = true;            
+        }
+        
+        if (Input.GetKey(FireLeft))
+        {
+            fireHorizontal = -1;
+            fired = true;            
+        }
+        else if (Input.GetKey(FireRight))
+        {
+            fireHorizontal = 1;
+            fired = true;            
+        }
+        
+        _fireDirection = new Vector2(fireHorizontal, fireVertical).normalized;
+        
+        // Shoot if the player presses space
+        if (fired)
+            _characterWeapon.Fire(_fireDirection);
     }
 
     /// <summary>

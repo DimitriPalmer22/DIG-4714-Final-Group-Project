@@ -15,6 +15,9 @@ public class MapGenerator : MonoBehaviour
     public int mapSizeX = 16;
     public int mapSizeY = 16;
     public int objectDensity = 10;
+
+    private GameObject _parentGameObject;
+
     void Start()
     {
         GenerateMap();
@@ -22,6 +25,9 @@ public class MapGenerator : MonoBehaviour
 
     void GenerateMap()
     {
+        // Create a parent GameObject to hold all the tiles
+        _parentGameObject = gameObject;
+        
         // debug checking if Startposition GameObject is assigned
         if (startingPoint == null)
         {
@@ -37,7 +43,7 @@ public class MapGenerator : MonoBehaviour
         int startY = Mathf.FloorToInt(startingPosition.y); // rounds to nearest "y" grid point
         int endX = startX + mapSizeX;
         int endY = startY + mapSizeY;
-        
+
         // list storing obstacle locations
         List<Vector3> obstaclePositions = new List<Vector3>();
 
@@ -53,8 +59,12 @@ public class MapGenerator : MonoBehaviour
             {
                 randomPosition = new Vector3(Random.Range(startX, endX), Random.Range(startY, endY));
             } while (obstaclePositions.Contains(randomPosition));
+
             obstaclePositions.Add(randomPosition);
-            Instantiate(obstacleTilePrefab, randomPosition, quaternion.identity);
+            var obj = Instantiate(obstacleTilePrefab, randomPosition, quaternion.identity);
+            
+            // Set the parent of the object to the parent GameObject
+            obj.transform.SetParent(_parentGameObject.transform);
         }
 
         // Nested for loops for Width "x" and height "y" 
@@ -67,13 +77,16 @@ public class MapGenerator : MonoBehaviour
                 if (x == startX || x == endX - 1 || y == startY || y == endY - 1)
                 {
                     // instantiate border tile
-                    Instantiate(borderTilePrefab, worldPosition, Quaternion.identity);
+                    var obj = Instantiate(borderTilePrefab, worldPosition, Quaternion.identity);
+                    
+                    obj.transform.SetParent(_parentGameObject.transform);
                 }
-                else if(!obstaclePositions.Contains(worldPosition))
+                else if (!obstaclePositions.Contains(worldPosition))
                 {
                     // instantiate floor tile if position is not occupied by an obstacles
-                    Instantiate(tilePrefab, worldPosition, Quaternion.identity);
+                    var obj = Instantiate(tilePrefab, worldPosition, Quaternion.identity);
                     
+                    obj.transform.SetParent(_parentGameObject.transform);
                 }
             }
         }
