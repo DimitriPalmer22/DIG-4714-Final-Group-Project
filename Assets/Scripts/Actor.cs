@@ -3,6 +3,8 @@ using UnityEngine;
 
 public abstract class Actor : MonoBehaviour
 {
+    protected const float INVINCIBILITY_DURATION = .5f;
+
     public delegate void DeathEventHandler();
 
     #region Fields
@@ -115,7 +117,7 @@ public abstract class Actor : MonoBehaviour
         // Do not change the character's health if the character is already dead
         if (_currentHealth <= 0)
             return;
-
+        
         // Update the character's health
         _currentHealth += changeAmount;
 
@@ -128,15 +130,15 @@ public abstract class Actor : MonoBehaviour
             // Do not do this if the character is already dead
             case < 0 when _currentHealth > 0:
                 // Start a coroutine to flash the character's sprite red
-                Flash(Color.red);
+                Flash(Color.red, totalFlashTime: INVINCIBILITY_DURATION);
                 break;
             // If the amount is positive, the character is healing
             case > 0:
                 // Start a coroutine to flash the character's sprite red
-                Flash(Color.green);
+                Flash(Color.green, totalFlashTime: INVINCIBILITY_DURATION);
                 break;
         }
-
+        
         // Invoke the OnDeath event if the character's health is 0
         if (_currentHealth <= 0)
             OnDeath?.Invoke();

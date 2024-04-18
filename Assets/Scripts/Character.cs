@@ -14,6 +14,8 @@ public class Character : Actor
 
     private Rigidbody2D _rb;
     
+    private bool _invincible;
+    
     #endregion
 
     #region Properties
@@ -63,6 +65,9 @@ public class Character : Actor
         // Get the character's rigid body
         _rb = GetComponent<Rigidbody2D>();
         
+        // set the invincible flag to false
+        _invincible = false;
+        
         // Get the character's animations
         _animator = GetComponent<Animator>();
         
@@ -86,9 +91,24 @@ public class Character : Actor
         if (_currentHealth <= 0)
             return;
         
+        // if the character is invincible, return
+        if (_invincible)
+            return;
+        
         base.ChangeHealth(changeAmount);
         
         UpdateHealthText();
+        
+        // set the invincible flag to true
+        _invincible = true;
+        
+        // invoke the function to set the invincible flag to false after a delay
+        Invoke(nameof(SetInvincibleFalse), INVINCIBILITY_DURATION);
+    }
+    
+    private void SetInvincibleFalse()
+    {
+        _invincible = false;
     }
     
     private void UpdateHealthText()
