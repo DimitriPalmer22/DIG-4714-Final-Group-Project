@@ -31,7 +31,7 @@ public class EnemySpawner : MonoBehaviour
     {
         spawnInterval -= Time.deltaTime;
 
-        if (spawnInterval <= 0)
+        if (spawnInterval <= 0 && !GlobalLevelScript.Instance.IsPlayerDead)
             SpawnEnemy();
     }
 
@@ -42,6 +42,10 @@ public class EnemySpawner : MonoBehaviour
         var enemyPrefab = _enemyPrefabs[Random.Range(0, _enemyPrefabs.Length)];
         
         var enemy = Instantiate(enemyPrefab, spawnPos, Quaternion.identity);
+        
+        // set the enemy's parent transform to the enemy spawner
+        enemy.transform.SetParent(transform);
+        
         SetTimeUntilSpawn();
         
         // Modify the enemy's health
