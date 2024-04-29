@@ -151,9 +151,15 @@ public class PlayerController : MonoBehaviour
 
     private void GetFireInput()
     {
+        // If the game is paused, don't get any input
+        // If the player is dead, don't get any input
+        if (GlobalLevelScript.Instance.IsPaused ||
+            GlobalLevelScript.Instance.IsPlayerDead)
+            return;
+
         // flag to check if the player has fired
         var fired = false;
-        
+
         float fireHorizontal = 0;
         float fireVertical = 0;
 
@@ -161,27 +167,27 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKey(FireUp))
         {
             fireVertical = 1;
-            fired = true;            
+            fired = true;
         }
         else if (Input.GetKey(FireDown))
         {
             fireVertical = -1;
-            fired = true;            
+            fired = true;
         }
-        
+
         if (Input.GetKey(FireLeft))
         {
             fireHorizontal = -1;
-            fired = true;            
+            fired = true;
         }
         else if (Input.GetKey(FireRight))
         {
             fireHorizontal = 1;
-            fired = true;            
+            fired = true;
         }
-        
+
         _fireDirection = new Vector2(fireHorizontal, fireVertical).normalized;
-        
+
         // Shoot if the player presses space
         if (fired)
             _characterWeapon.Fire(_fireDirection);
