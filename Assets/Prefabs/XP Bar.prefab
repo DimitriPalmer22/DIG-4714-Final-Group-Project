@@ -399,6 +399,7 @@ MonoBehaviour:
   xpBar: {fileID: 7195819298708885715}
   levelText: {fileID: 2883904684185865107}
   levelUpOptions: {fileID: 0}
+  powerUpEvery: 3
 --- !u!1 &8127628234196030657
 GameObject:
   m_ObjectHideFlags: 0

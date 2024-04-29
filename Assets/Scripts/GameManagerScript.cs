@@ -71,12 +71,12 @@ public class GameManagerScript : MonoBehaviour
     public void SaveGame()
     {
         Debug.Log("Saving game...");
-        
+
 
         Dictionary<IFileSaver, string> savers = new();
-        
+
         // Try to create the file savers
-        try 
+        try
         {
             savers.Add(new JsonFileSaver(), "Player Data.json");
             savers.Add(new XmlFileSaver(), "Player Data.xml");
@@ -93,9 +93,9 @@ public class GameManagerScript : MonoBehaviour
         {
             var fileSaver = saver.Key;
             string savePath = $"{Application.persistentDataPath}/{saver.Value}";
-            
+
             Debug.Log($"Saving to {savePath}");
-            
+
             using (fileSaver.OpenFileStream(savePath))
             {
                 // Try to save
