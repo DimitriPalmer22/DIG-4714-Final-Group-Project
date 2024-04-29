@@ -12,7 +12,7 @@ public class SimpleWeaponInfo : CharacterWeaponInfo
         // Get the projectile script
         var projectileScript = projectile.GetComponent<CharacterProjectile>();
 
-        projectileScript.Shoot(weapon.FireDirection, projectileVelocity + weapon.Character.Speed, weapon.Damage);
+        projectileScript.Shoot(weapon.FireDirection, this);
     }
 
     protected override void CustomCopy(CharacterWeaponInfo weaponInfo)

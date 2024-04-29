@@ -131,22 +131,22 @@ public class PlayerController : MonoBehaviour
         // TODO: Delete Later
 
         // Take damage if the player presses the "q" key
-        if (Input.GetKeyDown(KeyCode.Q))
-            _actorScript.ChangeHealth(-1);
-
-        // Heal if the player presses the "e" key
-        if (Input.GetKeyDown(KeyCode.E))
-            _actorScript.ChangeHealth(1);
-
-        // Change the score if the player presses the "r" or "t" key
-        if (Input.GetKeyDown(KeyCode.R))
-            GlobalLevelScript.Instance.ChangeScore(-5);
-
-        if (Input.GetKeyDown(KeyCode.T))
-            GlobalLevelScript.Instance.ChangeScore(5);
-
-        if (Input.GetKeyDown(KeyCode.L))
-            GameManagerScript.Instance.SaveGame();
+        // if (Input.GetKeyDown(KeyCode.Q))
+        //     _actorScript.ChangeHealth(-1);
+        //
+        // // Heal if the player presses the "e" key
+        // if (Input.GetKeyDown(KeyCode.E))
+        //     _actorScript.ChangeHealth(1);
+        //
+        // // Change the score if the player presses the "r" or "t" key
+        // if (Input.GetKeyDown(KeyCode.R))
+        //     GlobalLevelScript.Instance.ChangeScore(-5);
+        //
+        // if (Input.GetKeyDown(KeyCode.T))
+        //     GlobalLevelScript.Instance.ChangeScore(5);
+        //
+        // if (Input.GetKeyDown(KeyCode.L))
+        //     GameManagerScript.Instance.SaveGame();
     }
 
     private void GetFireInput()

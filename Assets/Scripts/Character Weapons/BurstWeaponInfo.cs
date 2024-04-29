@@ -6,13 +6,14 @@ public class BurstWeaponInfo : CharacterWeaponInfo
     /// <summary>
     /// How many projectiles to shoot during each burst.
     /// </summary>
+    [Header("Unique Weapon Stats")]
     [SerializeField] private int projectileCount;
 
     /// <summary>
     /// How long does it take to fire all the projectiles in the burst.
     /// </summary>
     [SerializeField] private float burstDuration;
-    
+
     public override void CustomFire()
     {
         // Start the coroutine to shoot the burst
@@ -22,7 +23,7 @@ public class BurstWeaponInfo : CharacterWeaponInfo
     protected override void CustomCopy(CharacterWeaponInfo weaponInfo)
     {
         var cInfo = weaponInfo as BurstWeaponInfo;
-        
+
         cInfo.projectileCount = projectileCount;
         cInfo.burstDuration = burstDuration;
     }
@@ -37,7 +38,8 @@ public class BurstWeaponInfo : CharacterWeaponInfo
             // Get the projectile script
             var projectileScript = projectile.GetComponent<CharacterProjectile>();
 
-            projectileScript.Shoot(weapon.FireDirection, projectileVelocity + weapon.Character.Speed, weapon.Damage);
+            projectileScript.Shoot(weapon.FireDirection, this);
+
 
             yield return new WaitForSeconds(burstDuration / projectileCount);
         }

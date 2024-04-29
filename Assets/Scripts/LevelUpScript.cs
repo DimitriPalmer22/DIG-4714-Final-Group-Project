@@ -27,7 +27,7 @@ public class LevelUpScript : MonoBehaviour
         {
             case 0:
                 //Increase damage here 
-                PlayerController.Instance.GetComponent<CharacterWeapon>().IncreaseWeaponDamage(1);
+                PlayerController.Instance.GetComponent<CharacterWeapon>().IncreaseDamageMultiplier(.25f);
                 break;
             case 1:
                 //Increase Move Speed

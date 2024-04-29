@@ -35,12 +35,12 @@ public abstract class Actor : MonoBehaviour
     /// <summary>
     /// The character's health
     /// </summary>
-    [SerializeField] protected int _currentHealth;
+    [SerializeField] protected float _currentHealth;
 
     /// <summary>
     /// The character's max health
     /// </summary>
-    [SerializeField] protected int _maxHealth;
+    [SerializeField] protected float _maxHealth;
 
     public event DeathEventHandler OnDeath;
 
@@ -112,7 +112,7 @@ public abstract class Actor : MonoBehaviour
     /// Change the character's health by a specific amount.
     /// </summary>
     /// <param name="changeAmount">The amount of health to change the character's health by</param>
-    public virtual void ChangeHealth(int changeAmount)
+    public virtual void ChangeHealth(float changeAmount)
     {
         // Do not change the character's health if the character is already dead
         if (_currentHealth <= 0)
@@ -148,7 +148,7 @@ public abstract class Actor : MonoBehaviour
     /// Change the current and max health of the character by a specific amount.
     /// </summary>
     /// <param name="amount"></param>
-    public void ModifyHealth(int amount)
+    public void ModifyHealth(float amount)
     {
         _maxHealth += amount;
         _currentHealth = Mathf.Clamp(_currentHealth + amount, 0, _maxHealth);

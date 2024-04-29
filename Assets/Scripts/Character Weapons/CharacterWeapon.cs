@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class CharacterWeapon : MonoBehaviour
 {
@@ -32,7 +33,7 @@ public class CharacterWeapon : MonoBehaviour
     /// <summary>
     /// How much damage the projectile does to the enemies.
     /// </summary>
-    [SerializeField] private int _damage;
+    [SerializeField] private float _damageMultiplier;
 
     #endregion Fields
 
@@ -42,7 +43,7 @@ public class CharacterWeapon : MonoBehaviour
 
     public Character Character => character;
     
-    public int Damage => _damage;
+    public float DamageMultiplier => _damageMultiplier;
 
     #endregion Properties
 
@@ -122,10 +123,10 @@ public class CharacterWeapon : MonoBehaviour
         _canShoot = true;
     }
     
-    public void IncreaseWeaponDamage(int amount)
+    public void IncreaseDamageMultiplier(float amount)
     {
         // Increase the weapon's damage
-        _damage += amount;
+        _damageMultiplier += amount;
     }
 
     #endregion Methods

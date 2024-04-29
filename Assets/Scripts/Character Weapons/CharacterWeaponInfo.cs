@@ -12,8 +12,12 @@ public abstract class CharacterWeaponInfo : MonoBehaviour
     [HideInInspector] public CharacterWeapon weapon;
     
     [SerializeField] public GameObject projectilePrefab;
+    
+    [Header("Basic Weapon Stats")]
+    [SerializeField] public float damage;
     [SerializeField] public float fireCooldown;
     [SerializeField] public float projectileVelocity;
+    [SerializeField] public float range;
     
     #endregion Fields
 
@@ -24,8 +28,10 @@ public abstract class CharacterWeaponInfo : MonoBehaviour
     public void CopyInformationTo(CharacterWeaponInfo weaponInfo)
     {
         weaponInfo.projectilePrefab = projectilePrefab;
+        weaponInfo.damage = damage;
         weaponInfo.fireCooldown = fireCooldown;
         weaponInfo.projectileVelocity = projectileVelocity;
+        weaponInfo.range = range;
         
         CustomCopy(weaponInfo);
     }

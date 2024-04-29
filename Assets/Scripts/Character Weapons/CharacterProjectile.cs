@@ -21,7 +21,17 @@ public class CharacterProjectile : MonoBehaviour
     /// <summary>
     /// How much damage the projectile does to the enemies.
     /// </summary>
-    private int _damage;
+    private float _damage;
+
+    /// <summary>
+    /// How far the projectile can travel before it is destroyed
+    /// </summary>
+    private float _range;
+    
+    /// <summary>
+    /// Starting position of the projectile
+    /// </summary>
+    private Vector3 _startPosition;
 
     // Start is called before the first frame update
     private void Start()
@@ -40,13 +50,20 @@ public class CharacterProjectile : MonoBehaviour
         _timePassed += Time.deltaTime;
         if(_timePassed >= LIFE_TIME)
             Destroy(this);
+        
+        // Destroy the projectile if it has traveled too far
+        if (Vector3.Distance(_startPosition, transform.position) >= _range)
+            Destroy(gameObject);
     }
 
-    public void Shoot(Vector2 direction, float speed, int damage)
+    public void Shoot(Vector2 direction, CharacterWeaponInfo weaponInfo)
     {
         _direction = direction;
-        this.speed = speed;
-        _damage = damage;
+        speed = weaponInfo.projectileVelocity + weaponInfo.weapon.Character.Speed;
+        _damage = weaponInfo.damage * weaponInfo.weapon.DamageMultiplier;
+        _range = weaponInfo.range;
+        
+        _startPosition = transform.position;
     }
     
     private void OnTriggerEnter2D(Collider2D other)
