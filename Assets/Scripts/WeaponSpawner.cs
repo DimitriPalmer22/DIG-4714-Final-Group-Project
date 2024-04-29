@@ -67,12 +67,14 @@ public class WeaponSpawner : MonoBehaviour
         );
 
         // Emit particles when the weapon is spawned
-        // var emitParams = new ParticleSystem.EmitParams
-        // {
-        //     position = spawnLocation,
-        // };
-
-        // _particleSystem.Emit(emitParams: emitParams, 200);
-        _particleSystem.Emit(200);
+        var emitParams = new ParticleSystem.EmitParams
+        {
+            position = spawnLocation,
+            applyShapeToPosition = true
+        };
+        _particleSystem.Emit(emitParams, 200);
+        
+        // Destroy the weapon after 10 seconds
+        Destroy(spawnedWeapon, 10);
     }
 }
