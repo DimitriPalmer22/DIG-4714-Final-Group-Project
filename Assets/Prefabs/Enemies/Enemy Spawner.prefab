@@ -47,6 +47,7 @@ MonoBehaviour:
   _enemyPrefabs:
   - {fileID: 8089740001568518734, guid: 2a38f21a7273ef9468c939f9af2dfe7c, type: 3}
   - {fileID: 4320595716776311782, guid: 9732ae92d743b5341980960c8579d20b, type: 3}
+  - {fileID: 7179766992016156824, guid: 9e085b64bc9922d46b9b489672e928db, type: 3}
   minSpawnTime: 1
   maxSpawnTime: 4
   healthModifier: 0

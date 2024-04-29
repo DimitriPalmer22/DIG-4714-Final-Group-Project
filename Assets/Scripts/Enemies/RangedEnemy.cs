@@ -62,7 +62,7 @@ public class RangedEnemy : EnemyScript
     {
         if (timeToFire <= 0f)
         {
-            Debug.Log("would shoot now");
+            // Debug.Log("would shoot now");
             timeToFire = fireRate;
             Instantiate(projectile, shootingPoint.position, shootingPoint.transform.rotation);
         }
