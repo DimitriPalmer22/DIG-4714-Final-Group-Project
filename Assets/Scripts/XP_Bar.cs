@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -12,19 +13,32 @@ public class XP_Bar : MonoBehaviour
 
     [SerializeField] private GameObject levelUpOptions;
 
-    [Tooltip("The level up options appear every X levels.")]
-    [SerializeField] private int powerUpEvery = 1;
+    [Tooltip("The level up options appear every X levels.")] [SerializeField]
+    private int powerUpEvery = 1;
 
-    private int level;
+    private int _level;
 
-    public int Level => level;
+    private static XP_Bar _instance;
+
+    public static XP_Bar Instance => _instance;
+
+    public event Action OnLevelUp;
+
+    public int Level => _level;
+
+    private void Awake()
+    {
+        // Set the singleton instance
+        _instance = this;
+
+        OnLevelUp += EnableLevelUpOptions;
+    }
 
     void Start()
     {
         xpBar.value = 0;
-        level = 1;
+        _level = 1;
     }
-
 
     public void AddXP(float xp)
     {
@@ -39,14 +53,20 @@ public class XP_Bar : MonoBehaviour
 
     private void LevelUp()
     {
-        level += 1;
-        Debug.Log("Level up! " + level);
-        levelText.text = $"Aggression Level: {level}";
+        _level += 1;
+        Debug.Log("Level up! " + _level);
+        levelText.text = $"Aggression Level: {_level}";
 
         xpBar.maxValue += .1f;
-        
+
+        // Invoke the event
+        OnLevelUp?.Invoke();
+    }
+    
+    private void EnableLevelUpOptions()
+    {
         // Check if the level is a multiple of the power up every value
-        if (level % powerUpEvery != 0) 
+        if (_level % powerUpEvery != 0)
             return;
         
         levelUpOptions.SetActive(true);

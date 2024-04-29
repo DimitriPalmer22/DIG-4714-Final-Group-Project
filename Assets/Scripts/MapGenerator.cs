@@ -34,6 +34,18 @@ public class MapGenerator : MonoBehaviour
             Debug.LogError("Starting point GameObject is not assigned.");
             return;
         }
+        
+        // Create a new child game object to store the floor tiles
+        var floorTileParent = new GameObject("Floor Tiles");
+        floorTileParent.transform.SetParent(_parentGameObject.transform);
+        
+        // Create a new child game object to store the border tiles
+        var borderTileParent = new GameObject("Border Tiles");
+        borderTileParent.transform.SetParent(_parentGameObject.transform);
+        
+        // Create a new child game object to store the obstacle tiles
+        var obstacleTileParent = new GameObject("Obstacle Tiles");
+        obstacleTileParent.transform.SetParent(_parentGameObject.transform);
 
         // Get starting point position from respective GameObject
         Vector3 startingPosition = startingPoint.transform.position;
@@ -64,7 +76,7 @@ public class MapGenerator : MonoBehaviour
             var obj = Instantiate(obstacleTilePrefab, randomPosition, quaternion.identity);
             
             // Set the parent of the object to the parent GameObject
-            obj.transform.SetParent(_parentGameObject.transform);
+            obj.transform.SetParent(obstacleTileParent.transform);
         }
 
         // Nested for loops for Width "x" and height "y" 
@@ -79,16 +91,23 @@ public class MapGenerator : MonoBehaviour
                     // instantiate border tile
                     var obj = Instantiate(borderTilePrefab, worldPosition, Quaternion.identity);
                     
-                    obj.transform.SetParent(_parentGameObject.transform);
+                    obj.transform.SetParent(borderTileParent.transform);
                 }
                 else if (!obstaclePositions.Contains(worldPosition))
                 {
                     // instantiate floor tile if position is not occupied by an obstacles
                     var obj = Instantiate(tilePrefab, worldPosition, Quaternion.identity);
                     
-                    obj.transform.SetParent(_parentGameObject.transform);
+                    obj.transform.SetParent(floorTileParent.transform);
                 }
             }
         }
+        
+        // Add a composite collider to the parent game object
+        _parentGameObject.AddComponent<CompositeCollider2D>();
+        
+        // Set the parent object's rigid body to static
+        var rb = _parentGameObject.GetComponent<Rigidbody2D>();
+        rb.bodyType = RigidbodyType2D.Static;
     }
 }
