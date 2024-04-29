@@ -160,11 +160,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91a61b96bde83214eb3aca782010d942, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _currentHealth: 3
-  _maxHealth: 3
+  _currentHealth: 2
+  _maxHealth: 2
   chaseSpeed: 2
-  scoreValue: 20
-  fireRate: 2
+  scoreValue: 30
+  fireRate: 3
   distanceToShoot: 8
   distanceToStop: 5
   shootingPoint: {fileID: 9140282290608073715}
