@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
+    /// <summary>
+    /// The maximum number of enemies that can be alive at once.
+    /// </summary>
+    [SerializeField] private int maxEnemyCount;
+
+    private int currentEnemyCount;
+    
     [SerializeField] private GameObject[] _enemyPrefabs;
 
     [SerializeField] private float minSpawnTime;
@@ -47,6 +54,9 @@ public class EnemySpawner : MonoBehaviour
 
     private void SpawnEnemy()
     {
+        if (currentEnemyCount >= maxEnemyCount)
+            return;
+        
         RandomLocation();
 
         var enemyPrefab = _enemyPrefabs[Random.Range(0, _enemyPrefabs.Length)];
@@ -65,6 +75,12 @@ public class EnemySpawner : MonoBehaviour
 
         // Subscribe to the enemy's OnDeath event
         enemyScript.OnDeath += DropOnDeath;
+        enemyScript.OnDeath += UpdateEnemyCountOnDeath;
+        
+        // Increment the current enemy count
+        currentEnemyCount++;
+        
+        Debug.Log($"Enemy Spawned: {currentEnemyCount} / {maxEnemyCount}");
     }
 
     private void SetTimeUntilSpawn()
@@ -122,5 +138,12 @@ public class EnemySpawner : MonoBehaviour
 
         // Destroy the drop after 10 seconds
         Destroy(drop, 10);
+    }
+    
+    private void UpdateEnemyCountOnDeath(Actor sender)
+    {
+        currentEnemyCount--;
+        
+        Debug.Log($"Enemy Died!: {currentEnemyCount} / {maxEnemyCount}");
     }
 }
