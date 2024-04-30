@@ -196,7 +196,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: GAME OVER
+  m_text: 'GAME OVER
+
+    PRESS SPACE TO RESTART'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: e60ab3cf24c116e4abfb1e14bd4f7bd2, type: 2}
   m_sharedMaterial: {fileID: -5211426549194409253, guid: e60ab3cf24c116e4abfb1e14bd4f7bd2, type: 2}
@@ -884,7 +886,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 160, y: 30}
+  m_SizeDelta: {x: 512, y: 64}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7004002726976081529
 CanvasRenderer:

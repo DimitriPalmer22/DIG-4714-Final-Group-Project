@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GlobalLevelScript : MonoBehaviour
 {
@@ -93,6 +94,13 @@ public class GlobalLevelScript : MonoBehaviour
             // If the game is not paused, pause the game
             else
                 PauseGame();
+        }
+        
+        // If the player is dead and they press the space key
+        if (IsPlayerDead && Input.GetKeyDown(KeyCode.Space))
+        {
+            // Reload the scene
+            SceneManager.LoadScene(0);
         }
     }
 

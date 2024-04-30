@@ -79,8 +79,6 @@ public class EnemySpawner : MonoBehaviour
         
         // Increment the current enemy count
         currentEnemyCount++;
-        
-        Debug.Log($"Enemy Spawned: {currentEnemyCount} / {maxEnemyCount}");
     }
 
     private void SetTimeUntilSpawn()
@@ -143,7 +141,5 @@ public class EnemySpawner : MonoBehaviour
     private void UpdateEnemyCountOnDeath(Actor sender)
     {
         currentEnemyCount--;
-        
-        Debug.Log($"Enemy Died!: {currentEnemyCount} / {maxEnemyCount}");
     }
 }
