@@ -18,6 +18,8 @@ public class GlobalLevelScript : MonoBehaviour
     [SerializeField] private GameObject _gameOverMenuParent;
 
     [SerializeField] private XP_Bar xpBar;
+    
+    [SerializeField] private ScoreUIManager scoreUIManager;
 
     /// <summary>
     /// How long the player has survived
@@ -177,6 +179,12 @@ public class GlobalLevelScript : MonoBehaviour
         
         // Save the player's score and time survived
         GameManagerScript.Instance.SaveGame();
+        
+        // Activate the score UI manager
+        scoreUIManager.Activate(GameManagerScript.Instance.SaveTokenManager);
+        
+        // Hide the XP bar
+        xpBar.gameObject.SetActive(false);
     }
     
     public SaveToken GetSaveToken()

@@ -32,6 +32,8 @@ public class GameManagerScript : MonoBehaviour
     public static GameManagerScript Instance { get; private set; }
 
     public CharacterClass CharacterClass => _characterClass;
+    
+    public SaveTokenManager SaveTokenManager => _saveTokenManager;
 
     #endregion
 
@@ -124,7 +126,7 @@ public class GameManagerScript : MonoBehaviour
         _currentSaveToken = GlobalLevelScript.Instance.GetSaveToken();
 
         // Add the save token to the token manager
-        _saveTokenManager.saves.Add(_currentSaveToken);
+        _saveTokenManager.AddSaveToken(_currentSaveToken);
         
         var fileSaver = new JsonFileSaver();
 

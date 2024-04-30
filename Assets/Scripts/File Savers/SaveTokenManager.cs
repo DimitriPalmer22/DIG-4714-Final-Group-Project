@@ -9,12 +9,23 @@ public class SaveTokenManager
     /// <summary>
     /// The maximum number of saves that can be stored
     /// </summary>
-    private const int MAX_SAVES = 3;
+    public const int MAX_SAVES = 3;
     
     public const string FILE_NAME = "Player Data.json";
 
     [SerializeField] public List<SaveToken> saves = new();
 
+    public void AddSaveToken(SaveToken token)
+    {
+        // Add the token to the list
+        saves.Add(token);
+        
+        // If there are more than the maximum number of saves, remove the oldest ones
+        if (saves.Count > MAX_SAVES)
+            saves.RemoveRange(0, saves.Count - MAX_SAVES);
+    }
+
+    
     public static SaveTokenManager Load()
     {
         // get the file location
@@ -39,4 +50,5 @@ public class SaveTokenManager
         
         return saveTokenManager;
     }
+    
 }

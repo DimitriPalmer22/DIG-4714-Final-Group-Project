@@ -757,6 +757,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Global Level Object
       objectReference: {fileID: 0}
+    - target: {fileID: 759360606313775530, guid: 4602d863215263b4fb5fff99524b3507, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 128
+      objectReference: {fileID: 0}
     - target: {fileID: 5816872011543542493, guid: 4602d863215263b4fb5fff99524b3507, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: -0.8838806
