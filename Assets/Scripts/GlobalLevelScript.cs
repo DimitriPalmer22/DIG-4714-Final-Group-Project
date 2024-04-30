@@ -11,16 +11,19 @@ public class GlobalLevelScript : MonoBehaviour
     // The player object
     private GameObject _player;
 
-    [Header("UI")]
-    
-    [SerializeField] private TMP_Text _scoreText;
+    [Header("UI")] [SerializeField] private TMP_Text _scoreText;
 
     [SerializeField] private GameObject _pausedMenuParent;
 
     [SerializeField] private GameObject _gameOverMenuParent;
 
     [SerializeField] private XP_Bar xpBar;
-    
+
+    /// <summary>
+    /// How long the player has survived
+    /// </summary>
+    private float _timeSurvived;
+
     #endregion
 
     #region Properties
@@ -29,7 +32,7 @@ public class GlobalLevelScript : MonoBehaviour
     /// The instance allows us to access the level script from any script.
     /// </summary>
     public static GlobalLevelScript Instance { get; private set; }
-    
+
     /// <summary>
     /// The player's score
     /// </summary>
@@ -46,8 +49,8 @@ public class GlobalLevelScript : MonoBehaviour
     /// <summary>
     /// The player's XP bar 
     /// </summary>
-    public XP_Bar XpBar => xpBar;    
-    
+    public XP_Bar XpBar => xpBar;
+
     #endregion
 
     #region Unity Methods
@@ -76,6 +79,10 @@ public class GlobalLevelScript : MonoBehaviour
     {
         // Receive input from the player
         UpdateInput();
+
+        // Update the time survived
+        if (!IsPaused && !IsPlayerDead)
+            _timeSurvived += Time.deltaTime;
     }
 
     #endregion
@@ -85,7 +92,7 @@ public class GlobalLevelScript : MonoBehaviour
     private void UpdateInput()
     {
         // If the player presses the pause key
-        if (Input.GetKeyDown(PauseKey))
+        if (Input.GetKeyDown(PauseKey) && !IsPlayerDead)
         {
             // If the game is pause, unpause the game
             if (IsPaused)
@@ -95,7 +102,7 @@ public class GlobalLevelScript : MonoBehaviour
             else
                 PauseGame();
         }
-        
+
         // If the player is dead and they press the space key
         if (IsPlayerDead && Input.GetKeyDown(KeyCode.Space))
         {
@@ -167,6 +174,14 @@ public class GlobalLevelScript : MonoBehaviour
 
         // Show the game over menu
         _gameOverMenuParent.SetActive(true);
+        
+        // Save the player's score and time survived
+        GameManagerScript.Instance.SaveGame();
+    }
+    
+    public SaveToken GetSaveToken()
+    {
+        return new SaveToken(Score, _timeSurvived, XpBar.Level);
     }
 
     #endregion

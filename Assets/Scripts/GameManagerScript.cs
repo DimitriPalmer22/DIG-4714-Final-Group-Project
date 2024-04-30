@@ -18,6 +18,10 @@ public class GameManagerScript : MonoBehaviour
     /// </summary>
     [SerializeField] private CharacterClass _characterClass;
 
+    private SaveTokenManager _saveTokenManager;
+
+    private SaveToken _currentSaveToken;
+    
     #endregion
 
     #region Properties
@@ -41,6 +45,9 @@ public class GameManagerScript : MonoBehaviour
         // Set the instance of the game manager
         if (Instance == null)
             Instance = this;
+        
+        // Load the save token manager
+        _saveTokenManager = SaveTokenManager.Load();
     }
 
     // Start is called before the first frame update
@@ -65,13 +72,12 @@ public class GameManagerScript : MonoBehaviour
 
     private void CreateCharacter()
     {
-        Debug.Log($"The character is a {_characterClass} class!");
+        // Debug.Log($"The character is a {_characterClass} class!");
     }
 
-    public void SaveGame()
+    public void SaveGameTest()
     {
         Debug.Log("Saving game...");
-
 
         Dictionary<IFileSaver, string> savers = new();
 
@@ -108,6 +114,38 @@ public class GameManagerScript : MonoBehaviour
                     Debug.LogError(e);
                     throw;
                 }
+            }
+        }
+    }
+
+    public void SaveGame()
+    {
+        // Create a save token for the current game
+        _currentSaveToken = GlobalLevelScript.Instance.GetSaveToken();
+
+        // Add the save token to the token manager
+        _saveTokenManager.saves.Add(_currentSaveToken);
+        
+        var fileSaver = new JsonFileSaver();
+
+        string savePath = $"{Application.persistentDataPath}/{SaveTokenManager.FILE_NAME}";
+
+        Debug.Log($"Saving to {savePath}");
+
+        // Save the game
+        using (fileSaver.OpenFileStream(savePath))
+        {
+            // Try to save
+            try
+            {
+                fileSaver.WriteText(_saveTokenManager);
+
+                Debug.Log("Game saved!");
+            }
+            catch (Exception e)
+            {
+                Debug.LogError(e);
+                throw;
             }
         }
     }
