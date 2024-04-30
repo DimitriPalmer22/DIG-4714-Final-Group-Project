@@ -76,7 +76,7 @@ SpriteRenderer:
   m_SortingLayerID: -718330347
   m_SortingLayer: -1
   m_SortingOrder: 1
-  m_Sprite: {fileID: -1503954763, guid: 8f1ba7c546ef578499ea2ce1bd7d5405, type: 3}
+  m_Sprite: {fileID: -654651840, guid: 20c6cb0d4d3ef734c88caa1b336ff746, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -138,7 +138,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weapon: {fileID: 0}
-  projectilePrefab: {fileID: 7994584620495132708, guid: f8bd5bf14e941c44ca670c3a27af951d, type: 3}
+  projectilePrefab: {fileID: 7994584620495132708, guid: a9aa38ab54bbf5f43a463f17e8461cf0, type: 3}
   damage: 1
   fireCooldown: 1
   projectileVelocity: 5
