@@ -5,7 +5,7 @@ public abstract class Actor : MonoBehaviour
 {
     protected const float INVINCIBILITY_DURATION = .5f;
 
-    public delegate void DeathEventHandler();
+    public delegate void DeathEventHandler(Actor sender);
 
     #region Fields
 
@@ -141,7 +141,7 @@ public abstract class Actor : MonoBehaviour
         
         // Invoke the OnDeath event if the character's health is 0
         if (_currentHealth <= 0)
-            OnDeath?.Invoke();
+            OnDeath?.Invoke(this);
     }
 
     /// <summary>

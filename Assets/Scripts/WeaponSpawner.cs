@@ -25,6 +25,10 @@ public class WeaponSpawner : MonoBehaviour
 
     private Dictionary<Type, Dictionary<string, (float min, float max)>> _modifierRanges = new();
 
+    private void Awake()
+    {
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -54,12 +58,12 @@ public class WeaponSpawner : MonoBehaviour
         _levelModifiers[typeof(BurstWeaponInfo)] = new Dictionary<string, float>
         {
             { "damage", 0 },
-            { "fireCooldown", 1 / 32f },
+            { "fireCooldown", 1 / 64f },
             { "projectileVelocity", 1 / 16f },
             { "range", 1 / 8f },
 
             { "projectileCount", 0 },
-            { "burstDuration", 0 }
+            { "burstDuration", .1f / 32f }
         };
 
         _levelModifiers[typeof(SpreadWeaponInfo)] = new Dictionary<string, float>
@@ -87,12 +91,12 @@ public class WeaponSpawner : MonoBehaviour
         _modifierRanges[typeof(BurstWeaponInfo)] = new Dictionary<string, (float min, float max)>
         {
             { "damage", (0, 1000) },
-            { "fireCooldown", (1 / 4f, 2) },
+            { "fireCooldown", (1 / 2f, 2) },
             { "projectileVelocity", (1 / 16f, 1000) },
             { "range", (1 / 8f, 1000) },
 
-            { "projectileCount", (0, 0) },
-            { "burstDuration", (0, 0) }
+            { "projectileCount", (3, 10) },
+            { "burstDuration", (1 / 16f, 5) }
         };
 
         _modifierRanges[typeof(SpreadWeaponInfo)] = new Dictionary<string, (float min, float max)>
@@ -192,5 +196,17 @@ public class WeaponSpawner : MonoBehaviour
             _modifierRanges[weaponInfo.GetType()]["range"].min,
             _modifierRanges[weaponInfo.GetType()]["range"].max
         );
+
+        // If the weapon is a burst weapon, decrease the burst duration
+        if (weaponInfo is BurstWeaponInfo burstWeaponInfo)
+        {
+            burstWeaponInfo.burstDuration -=
+                XP_Bar.Instance.Level * _levelModifiers[weaponInfo.GetType()]["burstDuration"];
+            burstWeaponInfo.burstDuration = Mathf.Clamp(
+                burstWeaponInfo.burstDuration,
+                _modifierRanges[weaponInfo.GetType()]["burstDuration"].min,
+                _modifierRanges[weaponInfo.GetType()]["burstDuration"].max
+            );
+        }
     }
 }

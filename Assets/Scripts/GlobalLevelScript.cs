@@ -152,7 +152,7 @@ public class GlobalLevelScript : MonoBehaviour
         _scoreText.text = $"Score: {Score}";
     }
 
-    public void OnPlayerDeath()
+    public void OnPlayerDeath(Actor sender)
     {
         // Set the player dead boolean to true
         IsPlayerDead = true;

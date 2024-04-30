@@ -51,3 +51,6 @@ MonoBehaviour:
   minSpawnTime: 1
   maxSpawnTime: 4
   healthModifier: 0
+  enemyDrops:
+  - {fileID: 3420970149491429266, guid: a80e41089d44754408aca2fa84dd6bca, type: 3}
+  dropChance: 0.1

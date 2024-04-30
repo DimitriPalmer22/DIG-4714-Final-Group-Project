@@ -88,21 +88,22 @@ public class Character : Actor
     {
         // Cast the current health to an int
         _currentHealth = (int)_currentHealth;
-        
+
         // If the character is dead, return
         if (_currentHealth <= 0)
             return;
 
-        // if the character is invincible, return
-        if (_invincible)
+        // if the character is invincible, and they would receive damage, return
+        if (_invincible && changeAmount < 0)
             return;
 
         base.ChangeHealth(changeAmount);
 
         UpdateHealthText();
 
-        // set the invincible flag to true
-        _invincible = true;
+        // set the invincible flag to true if the player is taking damage
+        if (changeAmount < 0)
+            _invincible = true;
 
         // invoke the function to set the invincible flag to false after a delay
         Invoke(nameof(SetInvincibleFalse), INVINCIBILITY_DURATION);
@@ -118,19 +119,19 @@ public class Character : Actor
         _healthText.text = $"x{(int)_currentHealth}";
     }
 
-    private void LogDeath()
+    private void LogDeath(Actor sender)
     {
         // Log the character's death
         Debug.Log("The character has died!");
     }
 
 
-    private void FlashBlackOnDeath()
+    private void FlashBlackOnDeath(Actor sender)
     {
         Flash(Color.black, 30, .5f);
     }
 
-    private void FreezeRigidBodyOnDeath()
+    private void FreezeRigidBodyOnDeath(Actor sender)
     {
         _rb.constraints = RigidbodyConstraints2D.FreezeAll;
     }

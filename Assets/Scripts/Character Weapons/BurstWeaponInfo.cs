@@ -7,12 +7,12 @@ public class BurstWeaponInfo : CharacterWeaponInfo
     /// How many projectiles to shoot during each burst.
     /// </summary>
     [Header("Unique Weapon Stats")]
-    [SerializeField] private int projectileCount;
+    [SerializeField] public int projectileCount;
 
     /// <summary>
     /// How long does it take to fire all the projectiles in the burst.
     /// </summary>
-    [SerializeField] private float burstDuration;
+    [SerializeField] public float burstDuration;
 
     public override void CustomFire()
     {

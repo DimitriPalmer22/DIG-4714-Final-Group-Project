@@ -30,12 +30,12 @@ public class XP_Bar : MonoBehaviour
     {
         // Set the singleton instance
         _instance = this;
-
-        OnLevelUp += EnableLevelUpOptions;
     }
 
     void Start()
     {
+        OnLevelUp += EnableLevelUpOptions;
+
         xpBar.value = 0;
         _level = 1;
     }

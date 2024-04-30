@@ -63,17 +63,17 @@ public abstract class EnemyScript : Actor
 
     protected abstract void MoveTowardPlayer();
 
-    private void DestroyOnDeath()
+    private void DestroyOnDeath(Actor sender)
     {
         Destroy(gameObject);
     }
 
-    private void AddToScoreOnDeath()
+    private void AddToScoreOnDeath(Actor sender)
     {
         GlobalLevelScript.Instance.ChangeScore(scoreValue);
     }
 
-    private void AddXPOnDeath()
+    private void AddXPOnDeath(Actor sender)
     {
         GlobalLevelScript.Instance.XpBar.AddXP(scoreValue);
     }
