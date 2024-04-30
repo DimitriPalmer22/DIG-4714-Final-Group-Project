@@ -9,7 +9,7 @@ using Random = UnityEngine.Random;
 /// </summary>
 public class WeaponSpawner : MonoBehaviour
 {
-    private const float SPAWN_CHANCE = 0.5f;
+    private const float SPAWN_CHANCE = 0.75f;
 
     /// <summary>
     /// An array of weapon prefabs that can be spawned.
